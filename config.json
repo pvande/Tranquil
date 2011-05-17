@@ -2,7 +2,7 @@
   "layout": [
     { type: 'chart' },
     { type: 'table', height: '40%' },
-    { type: 'countdown' },
+    { type: 'countdown', event: 'iPad launches', date: '2010-04-03' },
     [
       { type: 'delta' },
       { type: 'html' },
