@@ -1,13 +1,16 @@
 var Tranquil = { };
 
-function requireJavascript(script) {
+function requireJavascript(script, callback) {
   if (!document.querySelectorAll('script[src="' + script + '"]')[0]) {
     var tag = document.createElement('script');
     tag.src = script;
     tag.type = 'text/javascript';
     tag.charset = 'utf-8';
+    tag.onload = callback;
     document.head.appendChild(tag);
     return true;
+  } else {
+    callback();
   }
   return false;
 }
@@ -45,10 +48,12 @@ function buildLayout(layout) {
       var div = document.createElement('div');
       div.className = 'cell';
 
+      var fn = function() { (Tranquil[cell.type] || Object).call(div, cell) };
       if (!(cell.type in Tranquil)) {
-        requireJavascript('/javascript/' + cell.type + '.js');
+        requireJavascript('/javascript/' + cell.type + '.js', fn);
+      } else {
+        fn();
       }
-      (Tranquil[cell.type] || Object).call(div, cell);
 
       if ('height' in cell) { tr.style.height = cell.height }
       divRow.appendChild(div);
