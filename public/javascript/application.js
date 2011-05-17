@@ -1,3 +1,5 @@
+var Tranquil = { };
+
 function requireJavascript(script) {
   if (!document.querySelectorAll('script[src="' + script + '"]')[0]) {
     var tag = document.createElement('script');
@@ -43,7 +45,10 @@ function buildLayout(layout) {
       var div = document.createElement('div');
       div.className = 'cell';
 
-      div.innerHTML = JSON.stringify(cell);
+      if (!(cell.type in Tranquil)) {
+        requireJavascript('/javascript/' + cell.type + '.js');
+      }
+      (Tranquil[cell.type] || Object).call(div, cell);
 
       if ('height' in cell) { tr.style.height = cell.height }
       divRow.appendChild(div);
