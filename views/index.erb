@@ -9,6 +9,8 @@
     <div id='layout'></div>
     <script type="text/javascript" charset="utf-8">
       document.body.onload = function() {
+        var timeout = 0;
+
         (function(config) {
           var func = arguments.callee;
           if (JSON.stringify(func.lastConfig) != JSON.stringify(config)) {
@@ -16,14 +18,16 @@
 
             buildLayout(config.layout);
           }
+
           setTimeout(function() {
+            timeout = 10000;
             reqwest({
               url:'<%= params["config"] %>?callback=?',
               type: 'jsonp',
               success: func
             });
-          }, 1000);
-        })({ });
+          }, timeout);
+        })({});
       };
     </script>
   </body>
