@@ -1,0 +1,14 @@
+{
+  "layout": [
+    { type: 'chart' },
+    { type: 'table', height: '40%' },
+    { type: 'countdown' },
+    [
+      { type: 'delta' },
+      { type: 'html' },
+      { type: 'calendar' }
+    ],
+    { type: 'ticker', height: '16px' },
+    { type: 'ticker', height: '16px' }
+  ]
+}

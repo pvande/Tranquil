@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/stylesheets/application.css" />
+    <script src="/javascript/application.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://github.com/ded/reqwest/raw/master/reqwest.min.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+  <body class="">
+    <div id='layout'></div>
+    <script type="text/javascript" charset="utf-8">
+      document.body.onload = function() {
+        (function(config) {
+          var func = arguments.callee;
+          if (JSON.stringify(func.lastConfig) != JSON.stringify(config)) {
+            func.lastConfig = config;
+            buildLayout(config.layout, (func.lastConfig.layout || []).slice(0));
+          }
+          setTimeout(function() {
+            reqwest({
+              url:'<%= params["config"] %>?callback=?',
+              type: 'jsonp',
+              success: func
+            });
+          }, 1000);
+        })({ });
+      };
+    </script>
+  </body>
+</html>
