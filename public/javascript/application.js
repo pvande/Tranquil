@@ -32,7 +32,7 @@ function buildLayout(layout) {
   var table = document.createElement('table');
   table.id = 'layout';
 
-  layout.forEach(function(row) {
+  layout.forEach(function(row, i) {
     if (row.constructor != Array) { row = [row] }
 
     var tr = document.createElement('tr');
@@ -44,9 +44,10 @@ function buildLayout(layout) {
     tr.appendChild(td);
     td.appendChild(divRow);
 
-    row.forEach(function(cell) {
+    row.forEach(function(cell, j) {
       var div = document.createElement('div');
       div.className = 'cell';
+      div.id = 'cell-' + i + '-' + j;
 
       var fn = function() { (Tranquil[cell.type] || Object).call(div, cell) };
       if (!(cell.type in Tranquil)) {
