@@ -13,7 +13,8 @@
           var func = arguments.callee;
           if (JSON.stringify(func.lastConfig) != JSON.stringify(config)) {
             func.lastConfig = config;
-            buildLayout(config.layout, (func.lastConfig.layout || []).slice(0));
+
+            buildLayout(config.layout);
           }
           setTimeout(function() {
             reqwest({
