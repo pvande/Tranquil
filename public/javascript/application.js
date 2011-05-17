@@ -1,3 +1,26 @@
+function requireJavascript(script) {
+  if (!document.querySelectorAll('script[src="' + script + '"]')[0]) {
+    var tag = document.createElement('script');
+    tag.src = script;
+    tag.type = 'text/javascript';
+    tag.charset = 'utf-8';
+    document.head.appendChild(tag);
+    return true;
+  }
+  return false;
+}
+
+function requireStylesheet(style) {
+  if (!document.querySelectorAll('link[href="' + script + '"]')[0]) {
+    var tag = document.createElement('link');
+    tag.href = style;
+    tag.rel = 'stylesheet';
+    document.head.appendChild(tag);
+    return true;
+  }
+  return false;
+}
+
 function buildLayout(layout) {
   if (!layout) { return }
 

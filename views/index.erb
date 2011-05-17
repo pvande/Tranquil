@@ -16,6 +16,9 @@
           if (JSON.stringify(func.lastConfig) != JSON.stringify(config)) {
             func.lastConfig = config;
 
+            (config.javascript || []).forEach(requireJavascript);
+            (config.stylesheet || []).forEach(requireStylesheet);
+
             buildLayout(config.layout);
           }
 
