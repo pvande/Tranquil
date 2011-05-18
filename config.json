@@ -8,7 +8,12 @@
       { type: 'html' },
       { type: 'calendar' }
     ],
-    { type: 'ticker', height: '16px' },
-    { type: 'ticker', height: '16px' }
+    {
+      type: 'ticker',
+      height: '39px',
+      url: 'https://github.com/defunkt.json',
+      template: '{{#payload}}{{#repo}}{{^issue_id}}<span>{{#actor_attributes}}{{#gravatar_id}}<img src="http://www.gravatar.com/avatar/{{gravatar_id}}?s=28" style="background-color: white; border: solid white 2px; -webkit-border-radius: 5px; vertical-align: middle; margin-right: 6px" />{{/gravatar_id}}{{/actor_attributes}} {{actor}} {{#head}}{{#shas.length}}pushed {{size}} commits to{{/shas.length}}{{/head}}{{#issue}}{{action}} issue #{{number}} on{{/issue}}{{#pull_request}}{{action}} pull request #{{number}} on{{/pull_request}}{{#comment_id}}commented on {{commit}} from{{/comment_id}}{{#page_name}}{{action}} "{{.}}" on the{{/page_name}} {{repo}}{{#page_name}} wiki{{/page_name}}</span>{{/issue_id}}{{/repo}}{{/payload}}'
+    },
+    { type: 'ticker', height: '39px', url: 'http://example.com' }
   ]
 }

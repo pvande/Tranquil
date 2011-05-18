@@ -1,16 +1,18 @@
 var Tranquil = { };
 
 function requireJavascript(script, callback) {
-  if (!document.querySelectorAll('script[src="' + script + '"]')[0]) {
-    var tag = document.createElement('script');
+  var tag = document.querySelectorAll('script[src="' + script + '"]')[0];
+  if (tag) {
+    var fn = tag.onload;
+    tag.onload = function () { fn && fn(); callback() };
+  } else {
+    tag = document.createElement('script');
     tag.src = script;
     tag.type = 'text/javascript';
     tag.charset = 'utf-8';
     tag.onload = callback;
     document.head.appendChild(tag);
     return true;
-  } else {
-    callback();
   }
   return false;
 }
@@ -49,7 +51,7 @@ function buildLayout(layout) {
       div.className = 'cell ' + cell.type;
       div.id = 'cell-' + i + '-' + j;
 
-      var fn = function() { (Tranquil[cell.type] || Object).call(div, cell) };
+      var fn = function() { (Tranquil[cell.type]).call(div, cell) };
       if (!(cell.type in Tranquil)) {
         requireJavascript('/javascript/' + cell.type + '.js', fn);
       } else {
