@@ -24,5 +24,5 @@ Tranquil['countdown'] = function(obj) {
     div.appendChild(eventName);
     div.appendChild(timeText);
     setTimeout(arguments.callee, 1000 * 60 * 60);
-  })()
+  })();
 };

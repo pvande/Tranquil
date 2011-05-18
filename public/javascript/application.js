@@ -46,7 +46,7 @@ function buildLayout(layout) {
 
     row.forEach(function(cell, j) {
       var div = document.createElement('div');
-      div.className = 'cell';
+      div.className = 'cell ' + cell.type;
       div.id = 'cell-' + i + '-' + j;
 
       var fn = function() { (Tranquil[cell.type] || Object).call(div, cell) };
