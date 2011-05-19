@@ -1,12 +1,25 @@
 {
   "layout": [
     { type: 'chart' },
-    { type: 'table', height: '40%' },
+    {
+      type: 'table',
+      height: '40%',
+      data: [
+        [ , 'github',,  ],
+        [ , 'mojombo',, ],
+        [ , 'defunkt',, ],
+        [ , 'chacon',,  ],
+      ],
+      twitterLookup: 'function(name, callback) { reqwest({ url: "http://api.twitter.com/1/users/show.json?screen_name=" + name + "&callback=?", type: "jsonp", success: callback }) }',
+      hook: 'function(rows) { rows.forEach(function(row) { (this.twitterLookup = eval("("+this.twitterLookup+")"))(row[1].innerText, function(o) { row[0].innerHTML = "<img src=\\"" + o.profile_image_url + "\\" />" }) }, this) }',
+      update: 'function(rows) { rows.forEach(function(row) { this.twitterLookup(row[1].innerText, function(o) { row[2].innerHTML = o.status.text }) }, this) }',
+      interval: 120000,
+    },
     { type: 'countdown', event: 'iPad launches', date: '2010-04-03' },
     [
       { type: 'delta' },
       { type: 'html' },
-      { type: 'calendar' }
+      { type: 'calendar' },
     ],
     {
       type: 'ticker',
@@ -14,6 +27,6 @@
       url: 'https://github.com/defunkt.json',
       template: '{{#payload}}{{#repo}}{{^issue_id}}<span>{{#actor_attributes}}{{#gravatar_id}}<img src="http://www.gravatar.com/avatar/{{gravatar_id}}?s=28" style="background-color: white; border: solid white 2px; -webkit-border-radius: 5px; vertical-align: middle; margin-right: 6px" />{{/gravatar_id}}{{/actor_attributes}} {{actor}} {{#head}}{{#shas.length}}pushed {{size}} commits to{{/shas.length}}{{/head}}{{#issue}}{{action}} issue #{{number}} on{{/issue}}{{#pull_request}}{{action}} pull request #{{number}} on{{/pull_request}}{{#comment_id}}commented on {{commit}} from{{/comment_id}}{{#page_name}}{{action}} "{{.}}" on the{{/page_name}} {{repo}}{{#page_name}} wiki{{/page_name}}</span>{{/issue_id}}{{/repo}}{{/payload}}'
     },
-    { type: 'ticker', height: '39px', url: 'http://example.com' }
-  ]
+    { type: 'ticker', height: '39px', url: 'http://example.com' },
+  ],
 }

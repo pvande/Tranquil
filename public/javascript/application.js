@@ -34,6 +34,7 @@ function buildLayout(layout) {
   var table = document.createElement('table');
   table.id = 'layout';
 
+  var elements = [];
   layout.forEach(function(row, i) {
     if (row.constructor != Array) { row = [row] }
 
@@ -60,10 +61,12 @@ function buildLayout(layout) {
 
       if ('height' in cell) { tr.style.height = cell.height }
       divRow.appendChild(div);
+      elements.push(div);
     });
 
     table.appendChild(tr);
   });
 
   document.body.replaceChild(table, document.getElementById('layout'));
+  return elements;
 }

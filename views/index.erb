@@ -13,13 +13,17 @@
 
         (function(config) {
           var func = arguments.callee;
-          if (JSON.stringify(func.lastConfig) != JSON.stringify(config)) {
-            func.lastConfig = config;
+          if (func.lastConfig != JSON.stringify(config)) {
+            func.lastConfig = JSON.stringify(config);
+
+            (func.lastElements || []).forEach(function(element) {
+              if (element.update) { clearInterval(element.update) }
+            });
 
             (config.javascript || []).forEach(requireJavascript);
             (config.stylesheet || []).forEach(requireStylesheet);
 
-            buildLayout(config.layout);
+            func.lastElements = buildLayout(config.layout);
           }
 
           setTimeout(function() {
