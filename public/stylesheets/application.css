@@ -38,6 +38,37 @@ body {
   vertical-align: middle;
 }
 
+.cell.chart > table {
+  width: 95%;
+  height: 100%;
+  margin: auto;
+}
+
+.cell.chart > table > tfoot {
+  height: 1px;
+}
+
+.cell.chart > table table {
+  height: 100%;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.cell.chart > table td {
+  vertical-align: bottom;
+}
+
+.cell.chart > table .bar {
+  height: 100%;
+  background-image: -webkit-gradient(
+    linear,
+    center top,
+    center bottom,
+    from(rgba(0,0,0,0.0)),
+    to(rgba(0,0,0,0.4))
+  );
+}
+
 .cell.countdown {
   font-size: 3em;
 }
@@ -76,14 +107,14 @@ body {
   margin: 0 1em;
 }
 
-.cell.table table {
+.cell.table > table {
   width: 95%;
   height: 100%;
   border-spacing: 0.25em 0.5em;
   margin: 10px auto;
 }
 
-.cell.table table > tr {
+.cell.table > table > tr {
   margin: 5px;
   background: -webkit-gradient(
     linear,
@@ -93,7 +124,7 @@ body {
   );
 }
 
-.cell.table table > tr > td {
+.cell.table > table > tr > td {
   vertical-align: middle;
   padding: 10px;
   border-radius: 2px;

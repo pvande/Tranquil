@@ -1,6 +1,17 @@
 {
   "layout": [
-    { type: 'chart' },
+    {
+      type: 'chart',
+      height: '200px',
+      data: [
+        { title: 'Red', percentage: 100, color: 'red' },
+        { title: 'Green', percentage: 20, color: 'green' },
+        { title: 'Blue', percentage: 50, color: 'blue' },
+        { title: 'Orange', percentage: 10, color: 'orange' },
+        { title: 'Purple', percentage: 40, color: 'purple' },
+        { title: 'Teal', percentage: 30, color: 'teal' },
+      ]
+    },
     {
       type: 'table',
       height: '1px',
