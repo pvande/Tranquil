@@ -16,7 +16,7 @@
         [ , 'chacon',,  ],
       ],
       twitterLookup: 'function(name, callback) { reqwest({ url: "http://api.twitter.com/1/users/show.json?screen_name=" + name + "&callback=?", type: "jsonp", success: callback }) }',
-      hook: 'function(rows) { rows.forEach(function(row) { (this.twitterLookup = eval("("+this.twitterLookup+")"))(row[1].innerText, function(o) { row[0].innerHTML = "<img src=\\"" + o.profile_image_url + "\\" />" }) }, this) }',
+      init: 'function(rows) { rows.forEach(function(row) { (this.twitterLookup = eval("("+this.twitterLookup+")"))(row[1].innerText, function(o) { row[0].innerHTML = "<img src=\\"" + o.profile_image_url + "\\" />" }) }, this) }',
       update: 'function(rows) { rows.forEach(function(row) { this.twitterLookup(row[1].innerText, function(o) { row[2].innerHTML = o.status.text }) }, this) }',
       interval: 120000,
     },

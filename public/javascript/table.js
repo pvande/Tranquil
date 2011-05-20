@@ -20,8 +20,8 @@ Tranquil['table'] = function(obj) {
   }
   div.replaceChild(table, div.childNodes[0])
 
-  if (obj.hook) {
-    eval('('+obj.hook+')').call(obj, rows);
+  if (obj.init) {
+    eval('('+obj.init+')').call(obj, rows);
   }
 
   if (obj.update) {
