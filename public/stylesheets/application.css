@@ -7,11 +7,12 @@ body {
   height: 100%;
   margin: 0;
   color: #FFF;
+  text-shadow: 2px 2px 2px #777;
   background: -webkit-gradient(
     linear,
     center top,
     center bottom,
-    from(#181820), to(#181820), color-stop(50%, #282830)
+    from(#181820), to(#181820), color-stop(50%, #282829)
   );
 }
 
@@ -73,4 +74,38 @@ body {
   height: 100%;
   font-size: 32px;
   margin: 0 1em;
+}
+
+.cell.table table {
+  width: 95%;
+  height: 100%;
+  border-spacing: 0.25em 0.5em;
+  margin: 10px auto;
+}
+
+.cell.table table > tr {
+  margin: 5px;
+  background: -webkit-gradient(
+    linear,
+    center top,
+    center bottom,
+    from(#181820), to(#181820)
+  );
+}
+
+.cell.table table > tr > td {
+  vertical-align: middle;
+  padding: 10px;
+  border-radius: 2px;
+  background: -webkit-gradient(
+    linear,
+    center top,
+    center bottom,
+    color-stop(0, rgb(128,128,128)),
+    color-stop(0.01, rgb(50,50,50)),
+    color-stop(0.5, rgb(35,35,35)),
+    color-stop(0.5, rgb(128,128,128)),
+    color-stop(0.51, rgb(50,50,50)),
+    color-stop(1, rgb(35,35,35))
+  );
 }

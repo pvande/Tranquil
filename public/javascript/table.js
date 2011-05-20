@@ -13,6 +13,7 @@ Tranquil['table'] = function(obj) {
       var td = document.createElement('td');
       cells.push(td);
       td.innerHTML = row[j] || '';
+      td.style.cssText = obj.styles[j];
       tr.appendChild(td);
     }
     table.appendChild(tr);
