@@ -42,6 +42,7 @@ body {
   width: 95%;
   height: 100%;
   margin: auto;
+  table-layout: fixed;
 }
 
 .cell.chart > table > tfoot {
@@ -67,6 +68,38 @@ body {
     from(rgba(0,0,0,0.0)),
     to(rgba(0,0,0,0.4))
   );
+}
+
+.cell.chart > table :nth-child(8n+1) > table .bar {
+  background-color: yellow;
+}
+
+.cell.chart > table :nth-child(8n+2) > table .bar {
+  background-color: #06F;
+}
+
+.cell.chart > table :nth-child(8n+3) > table .bar {
+  background-color: red;
+}
+
+.cell.chart > table :nth-child(8n+4) > table .bar {
+  background-color: #F3F;
+}
+
+.cell.chart > table :nth-child(8n+5) > table .bar {
+  background-color: #3F3;
+}
+
+.cell.chart > table :nth-child(8n+6) > table .bar {
+  background-color: #66C;
+}
+
+.cell.chart > table :nth-child(8n+7) > table .bar {
+  background-color: #F39;
+}
+
+.cell.chart > table :nth-child(8n+8) > table .bar {
+  background-color: white;
 }
 
 .cell.countdown {

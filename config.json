@@ -3,14 +3,10 @@
     {
       type: 'chart',
       height: '200px',
-      data: [
-        { title: 'Red', percentage: 100, color: 'red' },
-        { title: 'Green', percentage: 20, color: 'green' },
-        { title: 'Blue', percentage: 50, color: 'blue' },
-        { title: 'Orange', percentage: 10, color: 'orange' },
-        { title: 'Purple', percentage: 40, color: 'purple' },
-        { title: 'Teal', percentage: 30, color: 'teal' },
-      ]
+      url: 'https://github.com/api/v2/json/repos/show/github?callback=?',
+      filter: 'function(data) { return data.repositories.map(function(e) { e.percentage = e.open_issues || 0.01; return e }).filter(function(e) { return e.watchers > 100 && !e.name.match(".com") }) }',
+      title: '{{name}}',
+      info: '{{open_issues}} / <span style="color: cyan">{{watchers}}</span>',
     },
     {
       type: 'table',
