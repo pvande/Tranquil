@@ -27,6 +27,6 @@ Tranquil['table'] = function(obj) {
   if (obj.update) {
     var update = eval('('+obj.update+')');
     div.update = function() { update.call(obj, rows) };
-    setInterval(div.update, this.interval || 60000);
+    setInterval(div.update, obj.interval || 60000);
   }
 };
