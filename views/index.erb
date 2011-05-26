@@ -18,7 +18,10 @@
             func.lastConfig = JSON.stringify(config);
 
             (func.lastElements || []).forEach(function(element) {
-              if (element.update) { clearInterval(element.update) }
+              if (element.update) {
+                clearInterval(element.update);
+                element.update = null;
+              }
             });
 
             (config.javascript || []).forEach(requireJavascript);
