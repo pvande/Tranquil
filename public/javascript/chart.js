@@ -1,6 +1,6 @@
 Tranquil['chart'] = function(obj) {
   var div = this;
-  obj.filter = eval('(' + (obj.filter || 'Object') + ')')
+  obj.filter = eval('(' + (obj.filter || 'Object') + ')');
   div.update = function() {
     reqwest({
       url: obj.url,

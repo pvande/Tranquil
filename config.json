@@ -27,7 +27,13 @@
       update: 'function(rows) { rows.forEach(function(row) { this.twitterLookup(row[1].innerText, function(o) { row[2].innerHTML = o.status.text }) }, this) }',
       interval: 120000,
     },
-    { type: 'countdown', event: 'iPad launches', date: '2010-04-03' },
+    {
+      type: 'countdown',
+      url: 'http://www.google.com/calendar/feeds/developer-calendar@google.com/public/full?alt=json-in-script&orderby=starttime&max-results=1&singleevents=true&sortorder=ascending&futureevents=true&callback=?',
+      filter: 'function(data) { this.event = data.feed.entry[0]; this.time = eval("(" + this.time + ")"); return this }',
+      time: 'function(x) { x=(Date.parse(this.event.gd$when[0].startTime) - new Date) / 1000 / 60 / 60 / 24; return (x=~~x) ? x + " days from now" : "today" }',
+      template: '<span class="event">{{event.title.$t}} is</span><span class="time">{{time}}</span>',
+    },
     [
       { type: 'delta' },
       { type: 'html' },
