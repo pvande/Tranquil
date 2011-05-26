@@ -1,4 +1,25 @@
-var Tranquil = { };
+var Tranquil = {
+  buildPanel: function(defaultInterval, fn) {
+    return function(obj) {
+      var div = this;
+      obj.filter = eval('(' + (obj.filter || 'Object') + ')');
+
+      div.update = function() {
+        reqwest({
+          url: obj.url,
+          type: 'jsonp',
+          success: function(data) {
+            data = obj.filter(data);
+            fn.call(div, obj, data);
+          },
+        });
+      };
+
+      div.update();
+      setInterval(div.update, obj.interval || defaultInterval || 1000 * 60);
+    }
+  },
+};
 
 function requireJavascript(script, callback) {
   var tag = document.querySelectorAll('script[src="' + script + '"]')[0];
