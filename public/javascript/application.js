@@ -16,7 +16,8 @@ var Tranquil = {
       };
 
       div.update();
-      setInterval(div.update, obj.interval || defaultInterval || 1000 * 60);
+      var interval = obj.interval || defaultInterval || (1).hour();
+      setInterval(div.update, interval);
     }
   },
 };
@@ -91,3 +92,11 @@ function buildLayout(layout) {
   document.body.replaceChild(table, document.getElementById('layout'));
   return elements;
 }
+
+(function(Num) {
+  Num.second = Num.seconds = function() { return this * 1000 };
+  Num.minute = Num.minutes = function() { return this.seconds() * 60 };
+  Num.hour   = Num.hours   = function() { return this.minutes() * 60 };
+  Num.day    = Num.days    = function() { return this.hours() * 24 };
+  Num.week   = Num.weeks   = function() { return this.days() * 7 };
+})(Number.prototype);
