@@ -5,8 +5,10 @@
       height: '200px',
       url: 'https://github.com/api/v2/json/repos/show/github?callback=?',
       filter: 'function(data) { return data.repositories.map(function(e) { e.percentage = e.open_issues || 0.01; return e }).filter(function(e) { return e.watchers > 100 && !e.name.match(".com") }) }',
-      title: '{{name}}',
-      info: '{{open_issues}} / <span style="color: cyan">{{watchers}}</span>',
+      template: {
+        title: '{{name}}',
+        info: '{{open_issues}} / <span style="color: cyan">{{watchers}}</span>',
+      },
     },
     {
       type: 'table',

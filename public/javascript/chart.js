@@ -1,25 +1,20 @@
-Tranquil['chart'] = function(obj) {
-  var div = this;
-  obj.filter = eval('(' + (obj.filter || 'Object') + ')');
-  div.update = function() {
-    reqwest({
-      url: obj.url,
-      type: 'jsonp',
-      success: function(data) {
-        data = obj.filter(data);
-        var style = 'height: {{percentage}}%; background-color: {{color}}';
-        div.innerHTML = Milk.render(
-          '<table><tr>'+
-            '{{#.}}<td><table>' +
-            '<tr><td>' + (obj.info || '{{info}}') + '</td></tr>' +
-            '<tr><td class="bar" style="' + style + '"></td></tr>' +
-          '</table></td>{{/.}}' +
-          '</tr><tfoot><tr>' +
-            '{{#.}}<td>' + (obj.title || '{{title}}') + '</td>{{/.}}' +
-          '</tr></tfoot></table>', data);
-      },
-    });
-  };
-  div.update();
-  setInterval(div.update, obj.interval || 60000);
-};
+Tranquil['chart'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
+  var parts = { info: '{{info}}', title: '{{title}}', bar: '' };
+
+  parts.bar += '<table>';
+  parts.bar += '<tr><td>{{>info}}</td></tr>';
+  parts.bar += '<tr><td class="bar" style="{{>style}}"></td></tr>';
+  parts.bar += '</table>';
+  parts.style = 'height: {{percentage}}%; background-color: {{color}}';
+
+  if (obj.template && obj.template.info)  { parts.info  = obj.template.info  }
+  if (obj.template && obj.template.title) { parts.title = obj.template.title }
+
+  var template = '';
+  template += '<table>';
+  template += '<tr>{{#.}}<td>{{>bar}}</td>{{/.}}</tr>';
+  template += '<tfoot><tr>{{#.}}<td>{{>title}}</td>{{/.}}</tr></tfoot>';
+  template += '</table>';
+
+  this.innerHTML = Milk.render(template, data, parts);
+});
