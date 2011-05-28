@@ -116,7 +116,7 @@ body {
   text-shadow: 2px 2px 2px #BBB;
 }
 
-.cell.ticker > div.ticker {
+.cell.ticker > div {
   display: inline-block;
   overflow: -webkit-marquee;
   white-space: nowrap;
@@ -124,7 +124,7 @@ body {
   -webkit-marquee-speed: 25ms;
 }
 
-.cell.ticker > div.ticker > span {
+.cell.ticker > div > span {
   display: inline-block;
   text-shadow: 2px 2px 2px #777;
   height: 100%;
@@ -132,7 +132,7 @@ body {
   margin: 0 1em;
 }
 
-.cell.ticker > div.ticker > span.error {
+.cell.ticker > div > span.error {
   color: #777;
   text-shadow: 2px 2px 2px #333;
   height: 100%;

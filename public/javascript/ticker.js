@@ -1,19 +1,32 @@
-Tranquil['ticker'] = function(obj) {
-  var div = this;
-  var ticker = document.createElement('div');
-  ticker.className = 'ticker';
-  div.appendChild(ticker);
+Tranquil['ticker'] = Tranquil.buildPanel((30).seconds(), function(obj, data) {
+  function appendData(div) {
+    var tmpl = '{{#.}}' + obj.template + '{{/.}}';
+    div.innerHTML += Milk.render(tmpl, data);
+  }
 
-  var error = "Could not read from " + obj.url;
-  ticker.innerHTML = '<span class="error">[' + error + ']</span>';
+  if (!this.childNodes.length) {
+    this.appendChild(document.createElement('div'));
+    return appendData(this.firstChild);
+  }
 
-  reqwest({
-    url: obj.url + '?callback=?',
-    type: 'jsonp',
-    success: function(data) {
-      ticker.removeChild(ticker.childNodes[0]);
-      var tmpl = '{{#.}}' + obj.template + '{{/.}}';
-      ticker.innerHTML += Milk.render(tmpl, data);
-    }
+  var div = this.firstChild;
+
+  var oldNodes = Array.prototype.filter.call(div.children, function(node) {
+    return node.getBoundingClientRect().right < -10;
   });
-};
+  
+  if (div.offsetWidth == this.offsetWidth) {
+    oldNodes.forEach(function(node) {
+      div.scrollLeft -= node.nextElementSibling.offsetLeft - node.offsetLeft
+      div.removeChild(node);
+    });
+
+    var last = div.lastChild;
+    var bufferWidth = last ? last.offsetLeft + last.offsetWidth : 0;
+    if (bufferWidth - div.scrollLeft < (3 * div.offsetWidth)) {
+      appendData(div);
+    }
+  } else {
+    appendData(div);
+  }
+});
