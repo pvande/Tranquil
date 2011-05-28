@@ -1,32 +1,29 @@
-Tranquil['ticker'] = Tranquil.buildPanel((30).seconds(), function(obj, data) {
-  function appendData(div) {
-    var tmpl = '{{#.}}' + obj.template + '{{/.}}';
-    div.innerHTML += Milk.render(tmpl, data);
-  }
-
+Tranquil['ticker'] = Tranquil.buildPanel((60).seconds(), function(obj, data) {
   if (!this.childNodes.length) {
     this.appendChild(document.createElement('div'));
-    return appendData(this.firstChild);
   }
 
   var div = this.firstChild;
+  var newest = div.lastChild;
 
-  var oldNodes = Array.prototype.filter.call(div.children, function(node) {
-    return node.getBoundingClientRect().right < -10;
-  });
-  
-  if (div.offsetWidth == this.offsetWidth) {
-    oldNodes.forEach(function(node) {
-      div.scrollLeft -= node.nextElementSibling.offsetLeft - node.offsetLeft
-      div.removeChild(node);
+  var bufferWidth = newest ? newest.offsetLeft + newest.offsetWidth : 0;
+  bufferWidth -= div.scrollLeft;
+
+  // If we have more elements in our buffer than fit onscreen at any given
+  // time, we'll trim off some of the oldest ones.
+  if (bufferWidth > div.offsetWidth) {
+    Array.prototype.forEach.call(div.children, function(e) {
+      if (e.getBoundingClientRect().right < -10) {
+        div.scrollLeft -= e.nextElementSibling.offsetLeft - e.offsetLeft;
+        div.removeChild(e);
+      }
     });
+  }
 
-    var last = div.lastChild;
-    var bufferWidth = last ? last.offsetLeft + last.offsetWidth : 0;
-    if (bufferWidth - div.scrollLeft < (3 * div.offsetWidth)) {
-      appendData(div);
-    }
-  } else {
-    appendData(div);
+  // If we have less than ten screen's widths of data buffered, we'll append
+  // the data we just queried.
+  if (bufferWidth < (10 * div.offsetWidth)) {
+    var tmpl = '{{#.}}' + obj.template + '{{/.}}';
+    div.innerHTML += Milk.render(tmpl, data);
   }
 });

@@ -118,10 +118,12 @@ body {
 
 .cell.ticker > div {
   display: inline-block;
+  text-align: left;
   overflow: -webkit-marquee;
   white-space: nowrap;
   -webkit-marquee-increment: small;
   -webkit-marquee-speed: 25ms;
+  width: 100%;
 }
 
 .cell.ticker > div > span {
