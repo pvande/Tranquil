@@ -38,8 +38,23 @@
     },
     [
       { type: 'delta' },
-      { type: 'html' },
-      { type: 'calendar' },
+      {
+        type: 'calendar',
+        url: 'http://www.google.com/calendar/feeds/developer-calendar@google.com/public/full?alt=json-in-script&orderby=starttime&max-results=6&singleevents=true&sortorder=ascending&futureevents=true&callback=?',
+        filter: 'function(data) { return { title: data.feed.title, events: data.feed.entry.map(function(e) { var d = new Date(e.gd$when[0].startTime); e.date = (d.getMonth() + 1) + "/" + d.getDate(); return e; }) } }',
+        template: {
+          title: '{{title.$t}}',
+          event: '<span style="color: #CCC; display: inline-block; margin-right: 10px; width: 2.5em; text-align: right">{{date}}</span>{{title.$t}}',
+        },
+      },
+      {
+        type: 'calendar',
+        url: 'http://calagator.org/events.json?limit=6&callback=?',
+        filter: 'function(data) { return { title: "Calagator", events: data.slice(0, 6).map(function(e) { var d = ~~(1 + (new Date(e.start_time).setHours(0) - new Date().setHours(0)) / 8.64e7); e.date = d ? d > 1 ? d + " days" : "tomorrow" : "today"; return e; }) } }',
+        template: {
+          event: '{{title}} (<span style="color: #CCC">{{date}}</span>)',
+        },
+      },
     ],
     {
       type: 'ticker',

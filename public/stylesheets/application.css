@@ -39,6 +39,39 @@ body {
   vertical-align: middle;
 }
 
+.cell.calendar {
+  padding: 5px;
+  width: 100%;
+}
+
+.cell.calendar > div:first-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: #933;
+  font-size: 2em;
+  padding: 4px 0.5em;
+}
+
+.cell.calendar > div:last-child {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: #433;
+  text-align: left;
+  width: 100%;
+  font-size: 2em;
+  padding: 4px 0;
+}
+
+.cell.calendar > div:last-child > div {
+  margin: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .cell.chart > table {
   width: 95%;
   height: 100%;
