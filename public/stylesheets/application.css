@@ -4,6 +4,7 @@ html { height: 100%; }
 
 body {
   font-family: 'Metrophobic';
+  font-size: 2.5em;
   height: 100%;
   margin: 0;
   color: #FFF;
@@ -51,7 +52,6 @@ body {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   background-color: #933;
-  font-size: 2em;
   padding: 4px 0.5em;
 }
 
@@ -61,7 +61,6 @@ body {
   background-color: #433;
   text-align: left;
   width: 100%;
-  font-size: 2em;
   padding: 4px 0;
 }
 
@@ -137,7 +136,7 @@ body {
 }
 
 .cell.countdown {
-  font-size: 3em;
+  font-size: 1.5em;
 }
 
 .cell.countdown > .event {
@@ -164,7 +163,6 @@ body {
   display: inline-block;
   text-shadow: 2px 2px 2px #777;
   height: 100%;
-  font-size: 32px;
   margin: 0 1em;
 }
 
