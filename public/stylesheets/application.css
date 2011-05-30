@@ -168,14 +168,6 @@ body {
   margin: 0 1em;
 }
 
-.cell.ticker > div > span.error {
-  color: #777;
-  text-shadow: 2px 2px 2px #333;
-  height: 100%;
-  font-size: 32px;
-  margin: 0 1em;
-}
-
 .cell.table > table {
   width: 95%;
   height: 100%;
