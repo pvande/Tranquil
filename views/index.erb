@@ -20,7 +20,7 @@
             (func.lastElements || []).forEach(function(element) {
               if (element.update) {
                 clearInterval(element.update);
-                element.update = null;
+                delete element.update;
               }
             });
 
