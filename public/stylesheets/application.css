@@ -76,6 +76,7 @@ body {
   height: 100%;
   margin: auto;
   table-layout: fixed;
+  font-size: 0.8em;
 }
 
 .cell.chart > table > tfoot {
@@ -86,6 +87,7 @@ body {
   height: 100%;
   width: 70%;
   margin: 0 auto;
+  font-size: 0.75em;
 }
 
 .cell.chart > table td {
@@ -103,36 +105,28 @@ body {
   );
 }
 
-.cell.chart > table :nth-child(8n+1) > table .bar {
-  background-color: yellow;
+.cell.chart > table :nth-child(6n+1) > table .bar {
+  background-color: #1F6298;
 }
 
-.cell.chart > table :nth-child(8n+2) > table .bar {
-  background-color: #06F;
+.cell.chart > table :nth-child(6n+2) > table .bar {
+  background-color: #FBD32E;
 }
 
-.cell.chart > table :nth-child(8n+3) > table .bar {
-  background-color: red;
+.cell.chart > table :nth-child(6n+3) > table .bar {
+  background-color: #B1241C;
 }
 
-.cell.chart > table :nth-child(8n+4) > table .bar {
-  background-color: #F3F;
+.cell.chart > table :nth-child(6n+4) > table .bar {
+  background-color: #647621;
 }
 
-.cell.chart > table :nth-child(8n+5) > table .bar {
-  background-color: #3F3;
+.cell.chart > table :nth-child(6n+5) > table .bar {
+  background-color: #8242DB;
 }
 
-.cell.chart > table :nth-child(8n+6) > table .bar {
-  background-color: #66C;
-}
-
-.cell.chart > table :nth-child(8n+7) > table .bar {
-  background-color: #F39;
-}
-
-.cell.chart > table :nth-child(8n+8) > table .bar {
-  background-color: white;
+.cell.chart > table :nth-child(6n+6) > table .bar {
+  background-color: #A13A5E;
 }
 
 .cell.countdown {
