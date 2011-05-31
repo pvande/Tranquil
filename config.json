@@ -15,8 +15,8 @@
       height: '1px',
       styles: [
         'width: 48px',
-        'font-size: 2.5em; text-align: left',
-        'font-size: 1.25em; font-variant: uppercase; text-align: left',
+        'text-align: left',
+        'font-size: 0.5em; font-variant: uppercase; text-align: left',
       ],
       data: [
         [ , 'github',,  ],
