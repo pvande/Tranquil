@@ -131,6 +131,7 @@ body {
 
 .cell.countdown {
   font-size: 1.5em;
+  padding: 0.25em;
 }
 
 .cell.countdown > .event {
