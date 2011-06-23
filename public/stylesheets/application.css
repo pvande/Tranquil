@@ -38,6 +38,7 @@ body {
   display: table-cell;
   text-align: center;
   vertical-align: middle;
+  position: relative;
 }
 
 .cell.calendar {
@@ -177,7 +178,7 @@ body {
 
 .cell.table > table > tr > td {
   vertical-align: middle;
-  padding: 10px;
+  padding: 5px 10px;
   border-radius: 2px;
   background: -webkit-gradient(
     linear,
@@ -185,9 +186,69 @@ body {
     center bottom,
     color-stop(0, rgb(128,128,128)),
     color-stop(0.01, rgb(50,50,50)),
-    color-stop(0.5, rgb(35,35,35)),
+    color-stop(0.5, rgb(45,45,45)),
     color-stop(0.5, rgb(128,128,128)),
     color-stop(0.51, rgb(50,50,50)),
-    color-stop(1, rgb(35,35,35))
+    color-stop(1, rgb(45,45,45))
+  );
+}
+
+.cell.reservation {
+  margin: 10px;
+  min-height: 60px;
+}
+
+.cell.reservation .title {
+  text-align: center;
+}
+
+.cell.reservation > div:last-child {
+  border: solid 1px #EEE;
+  position: relative;
+  height: 80%;
+  margin: 10px;
+}
+
+.cell.reservation > div:last-child > div:first-child {
+  border-bottom: solid 1px red;
+  position: absolute;
+  top: 25%;
+  left: 40px;
+  right: 0;
+  z-index: 1;
+}
+
+.cell.reservation > div:last-child > div:last-child {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  overflow: -webkit-marquee;
+  white-space: nowrap;
+  -webkit-marquee-direction: up;
+  -webkit-marquee-increment: 1px;
+  -webkit-marquee-speed: 60s;
+}
+
+.cell.reservation > div:last-child > div:last-child > div:last-child {
+  background-repeat: repeat-y !important;
+  height: 4320px;
+  width: 100%;
+}
+
+.cell.reservation div.res {
+  position: absolute;
+  left: 50px;
+  right: 10px;
+  min-height: 15px;
+  font-size: 15px;
+  border-radius: 4px;
+  vertical-align: middle;
+  border: solid 1px black;
+  background: -webkit-gradient(
+    linear,
+    center top,
+    center bottom,
+    color-stop(0, rgba(255,255,255,0.4)),
+    color-stop(1, rgba(255,255,255,0))
   );
 }
