@@ -3,7 +3,7 @@
   <head>
     <link rel="stylesheet" href="/stylesheets/application.css" />
     <script src="/javascript/application.js" type="text/javascript" charset="utf-8"></script>
-    <script src="https://github.com/ded/reqwest/raw/master/reqwest.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://github.com/ded/reqwest/raw/master/reqwest.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://github.com/pvande/Milk/raw/master/dist/v1.2.0/milk.min.js" type="text/javascript" charset="utf-8"></script>
   </head>
   <body class="">
@@ -33,7 +33,7 @@
           setTimeout(function() {
             timeout = 10000;
             reqwest({
-              url:'<%= params["config"] %>?callback=?',
+              url:'<%= URI.encode params["config"] %><%= params["config"].include?("?") ? "&" : "?" %>callback=?',
               type: 'jsonp',
               success: func
             });

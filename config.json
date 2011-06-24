@@ -1,66 +1,11 @@
 {
+  "javascript": [],
+  "stylesheet": [],
   "layout": [
     {
-      type: 'chart',
-      height: '200px',
-      url: 'https://github.com/api/v2/json/repos/show/github?callback=?',
-      filter: 'function(data) { return data.repositories.map(function(e) { e.percentage = e.open_issues || 0.01; return e }).filter(function(e) { return e.watchers > 100 && !e.name.match(".com") }) }',
-      template: {
-        title: '{{name}}',
-        info: '{{open_issues}} / <span style="color: cyan">{{watchers}}</span>',
-      },
-    },
-    {
-      type: 'table',
-      height: '1px',
-      styles: [
-        'width: 48px',
-        'text-align: left',
-        'font-size: 0.5em; font-variant: uppercase; text-align: left',
-      ],
-      data: [
-        [ , 'github',,  ],
-        [ , 'mojombo',, ],
-        [ , 'defunkt',, ],
-        [ , 'chacon',,  ],
-      ],
-      twitterLookup: 'function(name, callback) { reqwest({ url: "http://api.twitter.com/1/users/show.json?screen_name=" + name + "&callback=?", type: "jsonp", success: callback }) }',
-      init: 'function(rows) { rows.forEach(function(row) { (this.twitterLookup = eval("("+this.twitterLookup+")"))(row[1].innerText, function(o) { row[0].innerHTML = "<img src=\\"" + o.profile_image_url + "\\" />" }) }, this) }',
-      update: 'function(rows) { rows.forEach(function(row) { this.twitterLookup(row[1].innerText, function(o) { row[2].innerHTML = o.status.text }) }, this) }',
-      interval: 120000,
-    },
-    {
-      type: 'countdown',
-      url: 'http://www.google.com/calendar/feeds/developer-calendar@google.com/public/full?alt=json-in-script&orderby=starttime&max-results=1&singleevents=true&sortorder=ascending&futureevents=true&callback=?',
-      filter: 'function(data) { this.event = data.feed.entry[0]; this.time = eval("(" + this.time + ")"); return this }',
-      time: 'function(x) { x=(Date.parse(this.event.gd$when[0].startTime) - new Date) / 1000 / 60 / 60 / 24; return (x=~~x) ? x + " days from now" : "today" }',
-      template: '<span class="event">{{event.title.$t}} is</span><span class="time">{{time}}</span>',
-    },
-    [
-      { type: 'delta' },
-      {
-        type: 'calendar',
-        url: 'http://www.google.com/calendar/feeds/developer-calendar@google.com/public/full?alt=json-in-script&orderby=starttime&max-results=6&singleevents=true&sortorder=ascending&futureevents=true&callback=?',
-        filter: 'function(data) { return { title: data.feed.title, events: data.feed.entry.map(function(e) { var d = new Date(e.gd$when[0].startTime); e.date = (d.getMonth() + 1) + "/" + d.getDate(); return e; }) } }',
-        template: {
-          title: '{{title.$t}}',
-          event: '<span style="color: #CCC; display: inline-block; margin-right: 10px; width: 2.5em; text-align: right">{{date}}</span>{{title.$t}}',
-        },
-      },
-      {
-        type: 'calendar',
-        url: 'http://calagator.org/events.json?limit=6&callback=?',
-        filter: 'function(data) { return { title: "Calagator", events: data.slice(0, 6).map(function(e) { var d = ~~(1 + (new Date(e.start_time).setHours(0) - new Date().setHours(0)) / 8.64e7); e.date = d ? d > 1 ? d + " days" : "tomorrow" : "today"; return e; }) } }',
-        template: {
-          event: '{{title}} (<span style="color: #CCC">{{date}}</span>)',
-        },
-      },
-    ],
-    {
       type: 'ticker',
-      height: '39px',
-      url: 'https://github.com/defunkt.json?callback=?',
-      template: '{{#payload}}{{#repo}}{{^issue_id}}<span>{{#actor_attributes}}{{#gravatar_id}}<img src="http://www.gravatar.com/avatar/{{gravatar_id}}?s=28" style="background-color: white; border: solid white 2px; -webkit-border-radius: 5px; vertical-align: middle; margin-right: 6px" />{{/gravatar_id}}{{/actor_attributes}} {{actor}} {{#head}}{{#shas.length}}pushed {{size}} commits to{{/shas.length}}{{/head}}{{#issue}}{{action}} issue #{{number}} on{{/issue}}{{#pull_request}}{{action}} pull request #{{number}} on{{/pull_request}}{{#comment_id}}commented on {{commit}} from{{/comment_id}}{{#page_name}}{{action}} "{{.}}" on the{{/page_name}} {{repo}}{{#page_name}} wiki{{/page_name}}</span>{{/issue_id}}{{/repo}}{{/payload}}'
+      url: 'config.json?callback=?',
+      template: 'Welcome to Tranquil.&nbsp; You can supply your own configuration file by appending <tt>?config=<i>your_url</i></tt> to the URL.&nbsp; &nbsp; &nbsp; '
     },
   ],
 }

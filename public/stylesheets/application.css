@@ -135,6 +135,34 @@ body {
   padding: 0.25em;
 }
 
+.cell.countdown .starburst {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background: #FD0;
+  position: relative;
+  top: 0.15em;
+  left: -0.5em;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+}
+
+.cell.countdown .starburst em {
+  font-style: normal;
+  text-shadow: 0 0 2px #BBB;
+  position: relative;
+  color: #18181B;
+  top: -1.3em;
+}
+
+.cell.countdown .starburst span {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background: #FD0;
+  -webkit-transform: rotate(30deg);
+}
+
 .cell.countdown > .event {
   color: #BBB;
   text-shadow: 2px 2px 2px #777;
@@ -159,7 +187,54 @@ body {
   display: inline-block;
   text-shadow: 2px 2px 2px #777;
   height: 100%;
-  margin: 0 1em;
+  font-size: 32px;
+  margin: 0;
+  margin-left: 1em;
+}
+
+div.success:after {
+  content: '✓';
+  color: #0D0;
+  text-shadow: 0 0 6px #060;
+}
+/*div.error:after {
+  content: '✗';
+  color: #F00;
+  text-shadow: 0 0 4px #600;
+}
+*/
+div.success {
+  height: 32px !important;
+  width: 32px !important;
+  border-radius: 2em;
+  background-color: green;
+  border: solid 1px green;
+  margin: 0 auto;
+  -webkit-box-shadow: 0 0 10px green;
+  background-image: -webkit-gradient(
+    linear,
+    center top,
+    center bottom,
+    from(rgba(0,0,0,0.0)),
+    to(rgba(0,0,0,0.3))
+  );
+}
+
+div.error {
+  height: 32px !important;
+  width: 32px !important;
+  border-radius: 2em;
+  background-color: red;
+  border: solid 1px red;
+  margin: 0 auto;
+  -webkit-box-shadow: 0 0 10px red;
+  background-image: -webkit-gradient(
+    linear,
+    center top,
+    center bottom,
+    from(rgba(0,0,0,0.0)),
+    to(rgba(0,0,0,0.3))
+  );
 }
 
 .cell.table > table {
