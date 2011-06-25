@@ -11,7 +11,7 @@ Tranquil['reservation'] = Tranquil.buildPanel((1).minute(), function(obj, data) 
 
   if (obj.template) {
     if (obj.template.title)       { parts.title = obj.template.title }
-    if (obj.template.reservation) { parts.title = obj.template.reservation }
+    if (obj.template.reservation) { parts.reservation = obj.template.reservation }
     if (obj.template.color)       { parts.color = obj.template.color }
   }
 
