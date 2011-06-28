@@ -1,20 +1,19 @@
 Tranquil['chart'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
-  var parts = { info: '{{info}}', title: '{{title}}', bar: '' };
+  (obj.template = obj.template || {}).__proto__ = {
+    title: '{{title}}',
+    info: '{{info}}',
+    _bar: '<table style="height: {{percentage}}%">' +
+         '<tr><td class="info">{{>info}}</td></tr>' +
+         '<tr><td class="bar"></td></tr>' +
+         '</table>',
+  };
 
-  parts.bar += '<table>';
-  parts.bar += '<tr><td>{{>info}}</td></tr>';
-  parts.bar += '<tr><td class="bar" style="{{>style}}"></td></tr>';
-  parts.bar += '</table>';
-  parts.style = 'height: {{percentage}}%; background-color: {{color}}';
+  var template = '<table>' +
+                 '<tr>{{#.}}<td>{{>_bar}}</td>{{/.}}</tr>' +
+                 '<tfoot>' +
+                 '<tr>{{#.}}<td class="title">{{>title}}</td>{{/.}}</tr>' +
+                 '</tfoot>' +
+                 '</table>';
 
-  if (obj.template && obj.template.info)  { parts.info  = obj.template.info  }
-  if (obj.template && obj.template.title) { parts.title = obj.template.title }
-
-  var template = '';
-  template += '<table>';
-  template += '<tr>{{#.}}<td>{{>bar}}</td>{{/.}}</tr>';
-  template += '<tfoot><tr>{{#.}}<td>{{>title}}</td>{{/.}}</tr></tfoot>';
-  template += '</table>';
-
-  this.innerHTML = Milk.render(template, data, parts);
+  this.innerHTML = Milk.render(template, data, obj.template);
 });
