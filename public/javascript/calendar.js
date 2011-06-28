@@ -1,4 +1,4 @@
-Tranquil['calendar'] = Tranquil.buildPanel((60).seconds(), function(obj, data) {
+Tranquil['calendar'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
   (obj.template = obj.template || {}).__proto__ = {
     title: '{{title}}',
     event: '{{.}}',
