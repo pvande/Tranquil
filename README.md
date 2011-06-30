@@ -24,13 +24,5 @@ The `layout` key should refer to an array, each element corresponding to a
 'panels' (which will be distributed equitably across the width of the board),
 or individual 'panel' objects (which receive the full width).
 
-Each 'panel' is described by a simple object, with a few consistent keys:
-
-  * `type` - Not surprisingly, this describes the type of panel being created;
-    the value of `type` is used to look up a function in the global `Tranquil`
-    object, which is bound to the panel's div and receives the 'panel' object
-    as an argument.
-  * `height` - The height of this panel's row.
-  * `url` - The URL to retrieve data from.
-  * `interval` - The number of milliseconds between requests.
-  * `filter` - The name of a function used to preprocess the retrieved data.
+The different types of 'panels' are described in the
+[wiki](https://github.com/pvande/Tranquil/wiki/Types).
