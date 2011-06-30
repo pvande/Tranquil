@@ -173,6 +173,10 @@ body {
   text-shadow: 2px 2px 2px #BBB;
 }
 
+.cell.dynamic {
+  padding: 0.25em;
+}
+
 .cell.ticker > div {
   display: inline-block;
   text-align: left;
