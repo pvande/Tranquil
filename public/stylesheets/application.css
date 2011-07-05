@@ -138,11 +138,11 @@ body {
 .cell.countdown > .event {
   color: #BBB;
   text-shadow: 2px 2px 2px #777;
-  margin: 0.25em;
 }
 
 .cell.countdown > .time {
-  text-shadow: 2px 2px 2px #BBB;
+  text-shadow: 2px 2px 2px #777;
+  font-weight: bold;
 }
 
 .cell.dynamic {
