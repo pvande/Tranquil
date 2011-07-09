@@ -23,3 +23,8 @@ get '/jsonp' do
   content_type 'text/javascript'
   (params['callback'] || '') + "(#{ open(params['url']).read })"
 end
+
+get '/aggregate' do
+  content_type 'text/javascript'
+  (params['callback'] || '') + "({#{ params['url'].map { |k,v| "#{k.inspect}: #{ open(v).read }" }.join(',') }})"
+end
