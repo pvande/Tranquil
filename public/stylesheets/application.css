@@ -168,6 +168,10 @@ body {
   margin-left: 1em;
 }
 
+.cell.table {
+  height: 1px;
+}
+
 .cell.table > table {
   width: 95%;
   height: 100%;
@@ -182,7 +186,7 @@ body {
   margin: 0 auto;
 }
 
-.cell.table > table > tr > td {
+.cell.table > table tr > td {
   vertical-align: middle;
   padding: 5px 10px;
   border-radius: 2px;
@@ -190,12 +194,10 @@ body {
     linear,
     center top,
     center bottom,
-    color-stop(0, rgb(128,128,128)),
-    color-stop(0.01, rgb(50,50,50)),
-    color-stop(0.5, rgb(45,45,45)),
-    color-stop(0.5, rgb(128,128,128)),
+    color-stop(0.0, rgb(50,50,50)),
+    color-stop(0.5, rgb(40,40,40)),
     color-stop(0.51, rgb(50,50,50)),
-    color-stop(1, rgb(45,45,45))
+    color-stop(1, rgb(40,40,40))
   );
 }
 
