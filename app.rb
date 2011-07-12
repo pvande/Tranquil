@@ -21,10 +21,10 @@ end
 
 get '/jsonp' do
   content_type 'text/javascript'
-  (params['callback'] || '') + "(#{ open(params['url']).read })"
+  (params['callback'] || '') + "(#{ URI.parse(params['url']).open.read })"
 end
 
 get '/aggregate' do
   content_type 'text/javascript'
-  (params['callback'] || '') + "({#{ params['url'].map { |k,v| "#{k.inspect}: #{ open(v).read }" }.join(',') }})"
+  (params['callback'] || '') + "({#{ params['url'].map { |k,v| "#{k.inspect}: #{ URI.parse(v).open.read }" }.join(',') }})"
 end
