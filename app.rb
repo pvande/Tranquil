@@ -10,7 +10,7 @@ require 'sinatra'
 require 'open-uri'
 
 get '/' do
-  params['config'] ||= "config.json"
+  params['config'] ||= request.env['REQUEST_URI'] + "config.json"
   erb :index
 end
 
