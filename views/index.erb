@@ -33,7 +33,7 @@
           setTimeout(function() {
             timeout = 10000;
             reqwest({
-              url: '/jsonp?url=<%= URI.encode params["config"] %>&callback=?',
+              url: '/config?url=<%= URI.encode params["config"] || '' %>&callback=?',
               type: 'jsonp',
               success: func
             });

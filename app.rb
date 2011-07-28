@@ -10,8 +10,13 @@ require 'sinatra'
 require 'open-uri'
 
 get '/' do
-  params['config'] ||= request.env['REQUEST_URI'] + "config.json"
   erb :index
+end
+
+get '/config' do
+  content_type 'text/javascript'
+  path = params.has_key?('url') && params['url'] =~ %r[^http://] ? '/jsonp' : '/config.json'
+  call! env.merge("PATH_INFO" => path)
 end
 
 get '/:json.json' do
