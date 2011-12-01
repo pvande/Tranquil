@@ -8,6 +8,7 @@ end
 
 require 'sinatra'
 require 'open-uri'
+require 'cgi'
 
 get '/' do
   erb :index
@@ -15,7 +16,7 @@ end
 
 get '/config' do
   content_type 'text/javascript'
-  path = params.has_key?('url') && params['url'] =~ %r[^http://] ? '/jsonp' : '/config.json'
+  path = params.has_key?('url') && params['url'] =~ %r[^https?://] ? '/jsonp' : '/config.json'
   call! env.merge("PATH_INFO" => path)
 end
 
