@@ -40,7 +40,7 @@ function requireJavascript(script, callback) {
 }
 
 function requireStylesheet(style) {
-  if (!document.querySelectorAll('link[href="' + script + '"]')[0]) {
+  if (!document.querySelectorAll('link[href="' + style + '"]')[0]) {
     var tag = document.createElement('link');
     tag.href = style;
     tag.rel = 'stylesheet';
