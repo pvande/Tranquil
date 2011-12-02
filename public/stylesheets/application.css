@@ -170,6 +170,7 @@ body {
 
 .cell.table {
   height: 1px;
+  padding: 0.25em 0;
 }
 
 .cell.table > table {
