@@ -1,6 +1,12 @@
 Tranquil['ticker'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
   if (!this.childNodes.length) {
-    this.appendChild(document.createElement('div'));
+    var newChild = document.createElement('div');
+
+    if (typeof obj.speed != 'undefined') {
+      newChild.style['-webkit-marquee-speed'] = obj.speed + 'ms';
+    }
+
+    this.appendChild(newChild);
   }
 
   (obj.template = obj.template || {}).__proto__ = {
