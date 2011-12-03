@@ -4,6 +4,7 @@ Tranquil['reservation'] = Tranquil.buildPanel((1).minute(), function(obj, data) 
     reservation: '{{name}}',
     color: '',
     style: 'top: {{start}}px; height: {{length}}px; background-color: {{>color}}',
+    _reservations: '{{#reservations}}<div class="res" style="{{>style}}"><div style="position: relative;">{{>reservation}}</div></div>{{/reservations}}',
   };
 
   data.dID = this.id + '-container';
@@ -21,11 +22,7 @@ Tranquil['reservation'] = Tranquil.buildPanel((1).minute(), function(obj, data) 
     var tmpl = '<div class="title">{{>title}}</div>';
     tmpl += '<div><div></div><div>';
     tmpl += '<div id="{{dID}}" style="background: -webkit-canvas({{cID}})">';
-    tmpl += '{{#reservations}}';
-    tmpl += '<div class="res" style="{{>style}}">';
-    tmpl += '<div style="position: relative;">{{>reservation}}</div>';
-    tmpl += '</div>';
-    tmpl += '{{/reservations}}';
+    tmpl += '{{>_reservations}}';
     tmpl += '</div></div></div>';
     this.innerHTML = Milk.render(tmpl, data, parts);
 
@@ -42,6 +39,8 @@ Tranquil['reservation'] = Tranquil.buildPanel((1).minute(), function(obj, data) 
       canvas.fillRect(0, off + 30, 8, 1);
       canvas.fillRect(0, off + 45, 4, 1);
     }
+  } else {
+    document.getElementByID(dID).innerHTML = Milk.render(parts._reservations, data, parts);
   }
 
   var scrollTime = (t.getHours() - 1) * 60 + (t.getMinutes() + 1);
