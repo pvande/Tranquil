@@ -22,7 +22,9 @@ Tranquil['reservation'] = Tranquil.buildPanel((1).minute(), function(obj, data) 
     tmpl += '<div><div></div><div>';
     tmpl += '<div id="{{dID}}" style="background: -webkit-canvas({{cID}})">';
     tmpl += '{{#reservations}}';
-    tmpl += '<div class="res" style="{{>style}}">{{>reservation}}</div>';
+    tmpl += '<div class="res" style="{{>style}}">';
+    tmpl += '<div style="position: relative;">{{>reservation}}</div>';
+    tmpl += '</div>';
     tmpl += '{{/reservations}}';
     tmpl += '</div></div></div>';
     this.innerHTML = Milk.render(tmpl, data, parts);
@@ -45,6 +47,15 @@ Tranquil['reservation'] = Tranquil.buildPanel((1).minute(), function(obj, data) 
   var scrollTime = (t.getHours() - 1) * 60 + (t.getMinutes() + 1);
   scrollTime -= this.lastChild.getBoundingClientRect().height *0.25;
   this.lastChild.lastChild.scrollTop = scrollTime;
+
+  Array.prototype.forEach.call(this.getElementsByClassName('res'), function(res) {
+    var title = res.firstChild;
+    if (res.offsetTop > scrollTime) return;
+    title.style.top = Math.min(
+      scrollTime - res.offsetTop,
+      res.offsetHeight - title.offsetHeight - 8
+    ) + 'px';
+  });
 });
 
 Tranquil['reservation'].filterGCal = function(data) {
