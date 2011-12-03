@@ -1,4 +1,4 @@
-Tranquil['reservation'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
+Tranquil['reservation'] = Tranquil.buildPanel((5).minute(), function(obj, data) {
   var parts = {
     title: '{{title}}',
     reservation: '{{name}}',
@@ -43,18 +43,23 @@ Tranquil['reservation'] = Tranquil.buildPanel((1).minute(), function(obj, data) 
     document.getElementByID(dID).innerHTML = Milk.render(parts._reservations, data, parts);
   }
 
-  var scrollTime = (t.getHours() - 1) * 60 + (t.getMinutes() + 1);
-  scrollTime -= this.lastChild.getBoundingClientRect().height *0.25;
-  this.lastChild.lastChild.scrollTop = scrollTime;
+  var adjustScroll = (function() {
+    var scrollTime = (t.getHours() - 1) * 60 + (t.getMinutes() + 1);
+    scrollTime -= this.lastChild.getBoundingClientRect().height *0.25;
+    this.lastChild.lastChild.scrollTop = scrollTime;
 
-  Array.prototype.forEach.call(this.getElementsByClassName('res'), function(res) {
-    var title = res.firstChild;
-    if (res.offsetTop > scrollTime) return;
-    title.style.top = Math.min(
-      scrollTime - res.offsetTop,
-      res.offsetHeight - title.offsetHeight - 8
-    ) + 'px';
-  });
+    Array.prototype.forEach.call(this.getElementsByClassName('res'), function(res) {
+      var title = res.firstChild;
+      if (res.offsetTop > scrollTime) return;
+      title.style.top = Math.min(
+        scrollTime - res.offsetTop,
+        res.offsetHeight - title.offsetHeight - 8
+      ) + 'px';
+    });
+  }).bind(this);
+
+  setInterval(adjustScroll, 10000);
+  adjustScroll();
 });
 
 Tranquil['reservation'].filterGCal = function(data) {
