@@ -46,7 +46,6 @@ Tranquil['reservation'] = Tranquil.buildPanel((5).minute(), function(obj, data) 
     var t = new Date();
     var scrollTime = (t.getHours() - 1) * 60 + (t.getMinutes() + 1);
     scrollTime -= this.lastChild.getBoundingClientRect().height *0.25;
-    console.log(this);
     this.lastChild.lastChild.scrollTop = scrollTime;
 
     Array.prototype.forEach.call(this.getElementsByClassName('res'), function(res) {
