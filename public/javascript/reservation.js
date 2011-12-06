@@ -16,7 +16,6 @@ Tranquil['reservation'] = Tranquil.buildPanel((5).minute(), function(obj, data) 
     if (obj.template.color)       { parts.color = obj.template.color }
   }
 
-  var t = new Date();
   if (!this.innerHTML) {
     // Render template
     var tmpl = '<div class="title">{{>title}}</div>';
@@ -44,8 +43,10 @@ Tranquil['reservation'] = Tranquil.buildPanel((5).minute(), function(obj, data) 
   }
 
   var adjustScroll = (function() {
+    var t = new Date();
     var scrollTime = (t.getHours() - 1) * 60 + (t.getMinutes() + 1);
     scrollTime -= this.lastChild.getBoundingClientRect().height *0.25;
+    console.log(this);
     this.lastChild.lastChild.scrollTop = scrollTime;
 
     Array.prototype.forEach.call(this.getElementsByClassName('res'), function(res) {
