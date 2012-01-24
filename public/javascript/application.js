@@ -74,7 +74,21 @@ function buildLayout(layout) {
       div.className = 'cell ' + cell.type;
       div.id = 'cell-' + i + '-' + j;
 
-      var fn = function() { (Tranquil[cell.type]).call(div, cell) };
+      var fn = function() {
+        var type = Tranquil[cell.type];
+        if (!type)
+          return div.innerHTML = "Could not load type '" + cell.type + "'!";
+        if (type.javascript && !type.javascript.loaded) {
+          type.javascript.loaded = 0;
+          return type.javascript.forEach(function(e) {
+            requireJavascript(e, function() {
+              type.javascript.loaded += 1;
+              if (type.javascript.loaded == type.javascript.length) setTimeout(fn, 300);
+            });
+          });
+        }
+        Tranquil[cell.type].call(div, cell);
+      };
       if (!(cell.type in Tranquil)) {
         requireJavascript('/javascript/' + cell.type + '.js', fn);
       } else {
