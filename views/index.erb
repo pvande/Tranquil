@@ -9,6 +9,7 @@
   <body class="">
     <div id='layout'></div>
     <script type="text/javascript" charset="utf-8">
+      window.params = {<%= params.map { |k,v| k.inspect + ': ' + v.inspect }.join(', ') %>};
       document.body.onload = function() {
         var timeout = 0;
 
@@ -33,7 +34,7 @@
           setTimeout(function() {
             timeout = 10000;
             reqwest({
-              url: '/config?url=<%= CGI.escape(params["config"] || '') %>&callback=?',
+              url: '/config?url=' + escape(params.config || '') + '&callback=?',
               type: 'jsonp',
               success: func
             });
