@@ -26,7 +26,7 @@ function requireJavascript(script, callback) {
   var tag = document.querySelectorAll('script[src="' + script + '"]')[0];
   if (tag) {
     var fn = tag.onload;
-    tag.onload = function () { fn && fn(); callback() };
+    tag.onload = function () { fn && fn(); return callback() };
   } else {
     tag = document.createElement('script');
     tag.src = script;

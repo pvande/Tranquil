@@ -25,10 +25,22 @@
               }
             });
 
-            (config.javascript || []).forEach(requireJavascript);
+            var doLayout = function() {
+              func.lastElements = buildLayout(config.layout);
+            };
+
             (config.stylesheet || []).forEach(requireStylesheet);
 
-            func.lastElements = buildLayout(config.layout);
+            var scripts = (config.javascript || []);
+            scripts.loaded = 0;
+            scripts.forEach(function(e) {
+              requireJavascript(e, function() {
+                scripts.loaded += 1;
+                if (scripts.loaded == scripts.length) setTimeout(doLayout, 300);
+              });
+            });
+
+            config.javascript || doLayout();
           }
 
           setTimeout(function() {
