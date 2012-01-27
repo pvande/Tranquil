@@ -22,21 +22,21 @@ var Tranquil = {
   },
 };
 
-function requireJavascript(script, callback) {
-  var tag = document.querySelectorAll('script[src="' + script + '"]')[0];
-  if (tag) {
-    var fn = tag.onload;
-    tag.onload = function () { fn && fn(); return callback() };
-  } else {
-    tag = document.createElement('script');
-    tag.src = script;
-    tag.type = 'text/javascript';
-    tag.charset = 'utf-8';
-    tag.onload = callback;
-    document.head.appendChild(tag);
-    return true;
-  }
-  return false;
+// From: https://gist.github.com/1680738
+requireJavascript = function R(s,c,d,t){d=document,R[s]=t=R[s]||d.head.appendChild(d.createElement('script')),d=t.onload;t.x?c():t.onload=function(){c(t.x=1,d&&d())},t.src=s};
+
+function requireAllJavascript(scripts, callback) {
+  scripts = (scripts || []).slice(0);
+  if (!scripts.length) return callback();
+
+  scripts.forEach(function(script) {
+    requireJavascript(script, function() {
+      scripts = scripts.filter(function(s) {
+        return s !== script;
+      });
+      if (!scripts.length) callback();
+    });
+  });
 }
 
 function requireStylesheet(style) {
@@ -78,16 +78,10 @@ function buildLayout(layout) {
         var type = Tranquil[cell.type];
         if (!type)
           return div.innerHTML = "Could not load type '" + cell.type + "'!";
-        if (type.javascript && !type.javascript.loaded) {
-          type.javascript.loaded = 0;
-          return type.javascript.forEach(function(e) {
-            requireJavascript(e, function() {
-              type.javascript.loaded += 1;
-              if (type.javascript.loaded == type.javascript.length) setTimeout(fn, 300);
-            });
-          });
-        }
-        Tranquil[cell.type].call(div, cell);
+
+        requireAllJavascript(type.javascript, function() {
+          Tranquil[cell.type].call(div, cell);
+        }, cell.type);
       };
       if (!(cell.type in Tranquil)) {
         requireJavascript('/javascript/' + cell.type + '.js', fn);
