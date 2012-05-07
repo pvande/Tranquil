@@ -79,6 +79,7 @@ Tranquil['reservation'].filterGCal = function(data) {
       name: item.title,
       start: (start.getHours() - 1) * 60 + start.getMinutes() - 1,
       length: (end - start) / (1).minutes(),
+      rawItem: item,
     }
   };
 
