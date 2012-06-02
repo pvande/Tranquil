@@ -5,14 +5,18 @@ var Tranquil = {
       obj.filter = eval('(' + (obj.filter || 'Object') + ')');
 
       div.update = function() {
-        reqwest({
-          url: obj.url,
-          type: 'jsonp',
-          success: function(data) {
-            data = obj.filter(data);
-            fn.call(div, obj, data);
-          },
-        });
+        try {
+          if (obj.url) reqwest({
+            url: obj.url,
+            type: 'jsonp',
+            success: function(data) {
+              data = obj.filter(data);
+              fn.call(div, obj, data);
+            },
+          });
+        } catch (e) {
+          console.warn(e.message);
+        }
       };
 
       div.update();
