@@ -1,6 +1,8 @@
 var Tranquil = {
   buildPanel: function(defaultInterval, fn) {
-    return function(obj) {
+    defaultInterval || (1).hour();
+
+    var func = function(obj) {
       var div = this;
       obj.filter = eval('(' + (obj.filter || 'Object') + ')');
 
@@ -21,9 +23,10 @@ var Tranquil = {
 
       if (obj.data) fn.call(div, obj, obj.data);
       div.update();
-      var interval = obj.interval || defaultInterval || (1).hour();
-      setInterval(div.update, interval);
-    }
+      setInterval(div.update, obj.interval || defaultInterval);
+    };
+
+    return func;
   },
 };
 
