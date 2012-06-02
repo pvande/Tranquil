@@ -9,7 +9,7 @@
   <body class="">
     <div id='layout'></div>
     <script type="text/javascript" charset="utf-8">
-      window.params = {<%= params.map { |k,v| k.inspect + ': ' + v.inspect }.join(', ') %>};
+      window.params = <%= params_to_json %>;
       document.body.onload = function() {
         var timeout = 0;
 

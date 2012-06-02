@@ -34,3 +34,7 @@ get '/aggregate' do
   content_type 'text/javascript'
   (params['callback'] || '') + "({#{ params['url'].map { |k,v| "#{k.inspect}: #{ URI.parse(v).open.read }" }.join(',') }})"
 end
+
+def params_to_json
+  "{#{ params.map { |k,v| k.inspect + ': ' + (v.nil? ? 'null' : v.inspect) }.join(', ') }}"
+end
