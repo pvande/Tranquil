@@ -14,6 +14,10 @@ get '/' do
   erb :index
 end
 
+get '/builder' do
+  File.read(__DIR__ + '/views/builder.html')
+end
+
 get '/config' do
   content_type 'text/javascript'
   path = params.has_key?('url') && params['url'] =~ %r[^https?://] ? '/jsonp' : '/config.json'

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://raw.github.com/Shopify/batman/833fb99e186df128d9fca3bfe58dd522fba7c539/lib/dist/batman.js"></script>
+    <script src="http://coffeescript.org/extras/coffee-script.js"></script>
+    <script src="https://raw.github.com/rfletcher/safari-json-formatter/master/src/formattedJSON.js"></script>
+    <style>
+      html, body {
+        margin: 0;
+        height: 100%;
+        -webkit-user-select: none;
+      }
+
+      .tabs {
+        position: absolute;
+        display: block;
+        margin: 0;
+        padding: 0;
+        outline: none;
+        top: 0.5em;
+        left: 1em;
+      }
+      
+      .tabs li {
+        float: left;
+        border: solid 1px #999;
+        list-style-type: none;
+        padding: 0.5em;
+        border-collapse: collapse;
+      }
+      
+      .tabs li.active {
+        background-color: #CCC;
+      }
+
+      #configurer, #jsonConfig {
+        position: absolute;
+        padding: 1em;
+        padding-top: 0;
+        top: 3em;
+        left: 0;
+        bottom: 0;
+        overflow: auto;
+        display: none;
+      }
+
+      div.active {
+        display: block !important;
+      }
+      
+      #jsonConfig {
+        overflow: hidden;
+      }
+
+      #jsonConfig textarea {
+        overflow: auto;
+        border: solid 1px #999;
+        white-space: pre;
+        width: 100%;
+        height: 100%;
+      }
+      
+      #jsonConfig div:focus {
+        outline: none;
+      }
+
+      #configurer > table {
+        border: solid 1px #999;
+      }
+
+      #layout {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        right: 1em;
+        left: 1em;
+      }
+
+      #layout .layout-row {
+        height: 100%;
+        width: 100%;
+      }
+
+      #layout .layout-row td {
+        position: relative;
+        border: solid 1px #999;
+        overflow: hidden;
+      }
+
+      textarea {
+        width: 100%;
+        height: 7em;
+      }
+
+      #modal {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.6);
+        z-index: 2;
+      }
+
+      #modal > div {
+        background-color: #FFF;
+        position: absolute;
+        margin: 4em 3em;
+        padding: 1em;
+        border: solid 1px #000;
+        box-shadow: 0 0 100px #000;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        overflow: auto;
+      }
+
+      .max {
+        color: #777;
+        text-decoration: none;
+        font-weight: bold;
+        position: absolute;
+        top: 0;
+        right: 1.5em;
+        height: 1em;
+        width: 1em;
+      }
+
+      .min, .close {
+        color: #777;
+        text-decoration: none;
+        font-weight: bold;
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 1em;
+        width: 1em;
+      }
+
+      .min {
+        right: 0.5em;
+      }
+
+      .add {
+        background: #CCC;
+        line-height: 10px;
+        text-align: center;
+        vertical-align: middle;
+        -webkit-user-select: none;
+      }
+
+      .add.row {
+        height: 10px;
+      }
+
+      .add.cell {
+        width: 10px;
+      }
+
+      iframe {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 50%;
+      }
+    </style>
+    <script type="text/html" data-defineview="cell">
+      <label>Type</label>
+      <select data-bind="cell.type">
+        <option data-foreach-type="types" data-bind="type" />
+      </select>
+
+      <fieldset data-hideif="cell.parameters | default '' | equals ''">
+        <legend>Parameters</legend>
+        <div data-foreach-param="cell.parameters | default ''" >
+          <label data-bind="param.name"></label>
+          <input data-bind-type="param.type" data-bind="cell[param.name]" data-bind-placeholder="cell.parameterDefaults[param.name] | default ''" data-event-change="updateCell | withArguments cell, param.name" />
+        </div>
+      </fieldset>
+      <fieldset data-showif="cell.template">
+        <legend>Templates</legend>
+        <textarea data-bind="cell.template"></textarea>
+      </fieldset>
+    </script>
+  </head>
+  <body>
+    <ul class="tabs">
+      <li class='active' data-event-click="selectTab | withArguments 'configurer'">Configuration</li>
+      <li data-event-click="selectTab | withArguments 'jsonConfig'">JSON</li>
+    </ul>
+    <div>
+      <div id="modal" data-showif="focusedCell" data-context-cell="focusedCell">
+        <div>
+          <a class="min" data-event-click="minimizeCell | withArguments cell">▽</a>
+          <div data-partial="cell"></div>
+        </div>
+      </div>
+    </div>
+    <div class="active" id="configurer">
+      <table id="layout">
+        <tr data-foreach-row="config.layout">
+          <td class="row">
+            <table class="layout-row">
+              <tr>
+                <td data-foreach-cell="row">
+                  <a class="max" data-hideif="config.layout.length | equals 1 | and row.length | equals 1" data-event-click="maximizeCell | withArguments cell">❏</a>
+                  <a class="close" data-hideif="config.layout.length | equals 1 | and row.length | equals 1" data-event-click="removeCellFromRow | withArguments cell, row">✕</a>
+                  <div data-partial="cell"></div>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td class="add cell" data-event-click="addCellToRow | withArguments row">+</td>
+        </tr>
+        <tr>
+          <td class="add row" data-event-click="addRow">+</td>
+        </tr>
+      </table>
+    </div>
+    <div id="jsonConfig">
+      <textarea data-bind="jsonConfig"></textarea>
+    </div>
+    <iframe id="tranquil" seamless></iframe>
+    <script type="text/coffeescript">
+      class NoisyProperty extends Batman.Keypath
+        setValue: ->
+          super
+          @base.fire('change')
+
+      class NoisyObject extends Batman.Object
+        forEach: (f) ->
+          f(i) for own i of this when i != '_batman'
+
+        propertyClass: NoisyProperty
+
+      class Cell extends NoisyObject
+        # When the 'type' changes, we should destroy the properties and 
+        # templates for the old 'type'.  This means that we'll also need to
+        # force a refresh of everything that depends on 'template' or
+        # 'parameters'.
+        @observeAll 'type', (current, old) ->
+          @prevent 'change'
+          @unset name for {name} in tranquil.Tranquil[old]?.parameters || []
+          @property('parameterDefaults').refresh()
+          @allow 'change'
+
+          delete @property('parameters').parameters
+          delete @template
+
+          @property('parameters').refresh()
+          @property('template').refresh()
+
+        @accessor 'parameterDefaults', -> Batman()
+
+        @accessor 'parameters', ->
+          return @property('parameters').parameters if @property('parameters').parameters
+
+          if type = tranquil.Tranquil[@get('type')]
+            @prevent 'change'
+            @property('parameters').parameters = type.parameters || []
+            for param in @property('parameters').parameters
+              @get('parameterDefaults').set(param.name, param.default)
+            @allowAndFire 'change'
+          else
+            Batman.setImmediate => @property('parameters').refresh()
+
+          return @property('parameters').parameters
+
+        @accessor 'data',
+          get: ->
+            JSON.stringify(@data)
+          set: (k,v) ->
+            @data = v
+
+        @accessor 'template',
+          get: ->
+            if type = tranquil.Tranquil[@get('type')]
+              @template = Batman.extend {}, type.template, @template if type.template?
+            else
+              Batman.setImmediate => @property('template').refresh()
+            JSON.stringify(@template, null, 2)
+          set: (_, v) ->
+            @template = if typeof v is 'string' then JSON.parse(v) else v
+
+      class @App extends Batman.App
+        @set 'types', new Batman.Set(
+          'static'
+          'dynamic'
+          'calendar'
+          'chart'
+          'countdown'
+          'reservation'
+          'table'
+          'ticker'
+        )
+
+        @classAccessor 'jsonConfig'
+          get: -> JSON.stringify (@get('config')?.toJSON() ? {}), null, '  '
+          set: (_, v) ->
+            return if @lastConfig is v
+
+            layout = @get('config.layout')
+            json = JSON.parse(v)
+            @lastConfig = v
+
+            layout.prevent('change')
+            layout.clear()
+            for row in json.layout ? []
+              row = [row] unless row instanceof Array
+              tr  = @addRow()
+              for cell in row
+                tr.prevent 'change'
+                td = @addCellToRow(tr)
+                tr.allow 'change'
+
+                td.mixin(cell)
+
+            layout.allow('change')
+            layout.fire('change')
+
+        @on 'ready', ->
+          layout = new Batman.Set()
+          @set 'config', Batman({layout})
+          layout.on 'change', -> tranquil.buildLayout(this)
+          @set 'jsonConfig', '{"layout":[{"type":"static"}]}'
+
+        @selectTab: (id, element) ->
+          (e.className = '') for e in [document.getElementsByClassName('active')...]
+          document.getElementById(id).className = element.className = 'active'
+
+        @addRow: (node) ->
+          layout = @get('config.layout')
+          row = new Batman.Set()
+          layout.add(row)
+          row.on 'change', -> layout.fire('change')
+
+          # The postcondition lets us invoke this without automatically adding
+          # a new cell, which is useful for processing JSON input.
+          @addCellToRow(row) if node instanceof HTMLElement
+          return row
+
+        @addCellToRow: (row) ->
+          cell = new Cell(type: 'static')
+          row.add(cell)
+          cell.on 'change', -> row.fire('change')
+          return cell
+
+        @removeCellFromRow: (cell, row, link) ->
+          return if @get('config.layout.length') == row.get('length') == 1
+          return if link?.parentNode.className is 'maximized'
+          row.remove(cell)
+          @removeRow row if row.isEmpty()
+
+        @removeRow: (row) ->
+          layout = @get('config.layout')
+          layout.remove(row)
+
+        @maximizeCell: (cell) ->
+          @set 'focusedCell', cell
+
+        @minimizeCell: (cell) ->
+          @unset 'focusedCell'
+
+        @updateCell: (cell, key, element) ->
+          cell.set(key, element.value || undefined)
+          return true
+
+      # Set up callbacks for loading the IFRAME
+      iframe = document.getElementById('tranquil')
+      iframe.onload = =>
+        # Rescale the content so that it's a more accurate representation of
+        # 1080p (1920×1080)
+        do @onresize = ->
+          if true  # Vertical orientation
+            zoom = document.body.offsetHeight / 1920.0
+            proportionalWidth = zoom * 1080.0
+            tranquil.document.body.style.zoom = zoom
+            iframe.style.width = proportionalWidth + 'px'
+            modal.style.right =
+            jsonConfig.style.right =
+            configurer.style.right = proportionalWidth + 'px'
+
+        App.run()
+
+      # Load Tranquil in the IFRAME
+      iframe.src = "/?skipLayout=true"
+    </script>
+  </body>
+</html>
