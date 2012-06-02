@@ -19,6 +19,7 @@ var Tranquil = {
         }
       };
 
+      if (obj.data) fn.call(div, obj, obj.data);
       div.update();
       var interval = obj.interval || defaultInterval || (1).hour();
       setInterval(div.update, interval);
