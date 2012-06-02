@@ -11,6 +11,7 @@
     <script type="text/javascript" charset="utf-8">
       window.params = <%= params_to_json %>;
       document.body.onload = function() {
+        if (params.skipLayout) return;
         var timeout = 0;
 
         (function(config) {
