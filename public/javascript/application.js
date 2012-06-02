@@ -27,7 +27,7 @@ var Tranquil = {
 };
 
 // From: https://gist.github.com/1680738
-requireJavascript = function R(s,c,d,t){d=document,R[s]=t=R[s]||d.head.appendChild(d.createElement('script')),d=t.onload;t.x?c():t.onload=function(){c(t.x=1,d&&d())},t.src=s};
+requireJavascript = function f(a,b){with(document)with(f[a]=f[a]||head.appendChild(createElement('script')))src=a,a=onload,id?b():onload=function(){b(id=1,a&&a())}};
 
 function requireAllJavascript(scripts, callback) {
   scripts = (scripts || []).slice(0);
