@@ -62,6 +62,7 @@ function buildLayout(layout) {
 
   var elements = [];
   layout.forEach(function(row, i) {
+    row = JSON.parse(JSON.stringify(row));
     if (row.constructor != Array) { row = [row] }
 
     var tr = document.createElement('tr');
@@ -87,6 +88,7 @@ function buildLayout(layout) {
           Tranquil[cell.type].call(div, cell);
         }, cell.type);
       };
+
       if (!(cell.type in Tranquil)) {
         requireJavascript('/javascript/' + cell.type + '.js', fn);
       } else {
