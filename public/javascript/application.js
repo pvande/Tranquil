@@ -23,8 +23,33 @@ var Tranquil = {
 
       if (obj.data) fn.call(div, obj, obj.data);
       div.update();
+
       setInterval(div.update, obj.interval || defaultInterval);
     };
+
+    func.parameters = [
+      {
+        name: 'url',
+        type: 'text',
+        description: 'URL to fetch data from',
+      },
+      {
+        name: 'interval',
+        type: 'text',
+        description: 'Polling frequency (in milliseconds)',
+        default: defaultInterval,
+      },
+      {
+        name: 'filter',
+        type: 'text',
+        description: 'A transformation function for the fetched data structure',
+      },
+      {
+        name: 'data',
+        type: 'object',
+        description: 'Initial dataset; useful for prototyping',
+      },
+    ];
 
     return func;
   },

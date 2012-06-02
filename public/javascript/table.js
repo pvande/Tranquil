@@ -12,6 +12,12 @@ Tranquil['table'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
   this.innerHTML = Milk.render("{{>_content}}", data, obj.template);
 });
 
+Tranquil['table'].parameters.push({
+  name: 'keys',
+  type: 'array',
+  description: 'An array of indices into the data object, corresponding to table rows'
+});
+
 Tranquil['table'].template = {
   cells: [],
 };

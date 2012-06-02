@@ -36,6 +36,13 @@ Tranquil['ticker'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
   }
 });
 
+Tranquil['ticker'].parameters.push({
+  name: 'speed',
+  type: 'text',
+  default: 25,
+  description: 'The scrolling speed of the ticker (in milliseconds)'
+});
+
 Tranquil['ticker'].template = {
   element: '<span>{{.}}</span>',
 };
