@@ -1,4 +1,6 @@
 Tranquil['ticker'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
+  (obj.template = obj.template || {}).__proto__ = Tranquil['ticker'].template;
+
   if (!this.childNodes.length) {
     var newChild = document.createElement('div');
 
@@ -8,10 +10,6 @@ Tranquil['ticker'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
 
     this.appendChild(newChild);
   }
-
-  (obj.template = obj.template || {}).__proto__ = {
-    element: '<span>{{.}}</span>',
-  };
 
   var div = this.firstChild;
   var newest = div.lastChild;
@@ -37,3 +35,7 @@ Tranquil['ticker'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
     div.innerHTML += Milk.render(template, data, obj.template);
   }
 });
+
+Tranquil['ticker'].template = {
+  element: '<span>{{.}}</span>',
+};

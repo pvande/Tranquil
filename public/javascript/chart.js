@@ -1,7 +1,6 @@
 Tranquil['chart'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
-  (obj.template = obj.template || {}).__proto__ = {
-    title: '{{title}}',
-    info: '{{info}}',
+  (obj.template = obj.template || {}).__proto__ = Tranquil['chart'].template;
+  obj.template.__proto__ = {
     _bar: '<table style="height: {{percentage}}%">' +
          '<tr><td class="info">{{>info}}</td></tr>' +
          '<tr><td class="bar"></td></tr>' +
@@ -17,3 +16,8 @@ Tranquil['chart'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
 
   this.innerHTML = Milk.render(template, data, obj.template);
 });
+
+Tranquil['chart'].template = {
+  title: '{{title}}',
+  info: '{{info}}',
+};
