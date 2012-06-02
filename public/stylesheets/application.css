@@ -71,6 +71,10 @@ body {
   text-overflow: ellipsis;
 }
 
+.cell.chart {
+  padding-top: 0.5em;
+}
+
 .cell.chart > table {
   width: 95%;
   height: 100%;
@@ -103,6 +107,12 @@ body {
     from(rgba(0,0,0,0.0)),
     to(rgba(0,0,0,0.4))
   );
+}
+
+.cell.chart > table td.info {
+  position: relative;
+  top: -0.75em;
+  line-height: 0;
 }
 
 .cell.chart > table :nth-child(6n+1) > table .bar {
