@@ -53,7 +53,7 @@ Tranquil['reservation'] = Tranquil.buildPanel((5).minute(), function(obj, data) 
       if (res.offsetTop > scrollTime) return;
       title.style.top = Math.min(
         scrollTime - res.offsetTop,
-        res.offsetHeight - title.offsetHeight - 8
+        res.offsetHeight - title.offsetHeight
       ) + 'px';
     });
   }).bind(this);
