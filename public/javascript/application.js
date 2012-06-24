@@ -85,6 +85,9 @@ function requireStylesheet(style) {
 
 function buildLayout(layout) {
   if (!layout) { return }
+function listify(x) {
+  return x ? (x instanceof Array ? x : [x]) : [];
+}
 
   var table = document.createElement('table');
   table.id = 'layout';
