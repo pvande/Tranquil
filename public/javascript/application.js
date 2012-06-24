@@ -21,8 +21,8 @@ var Tranquil = {
         }
       };
 
-      if (obj.data) fn.call(div, obj, obj.data);
       div.update();
+      if (obj.data) fn.call(div, obj, obj.filter(obj.data));
 
       setInterval(div.update, obj.interval || defaultInterval);
     };
