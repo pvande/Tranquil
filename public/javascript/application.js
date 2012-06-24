@@ -55,8 +55,8 @@ var Tranquil = {
   },
 };
 
-// From: https://gist.github.com/1680738
-requireJavascript = function f(a,b){with(document)with(f[a]=f[a]||head.appendChild(createElement('script')))src=a,a=onload,id?b():onload=function(){b(id=1,a&&a())}};
+// Modified From: https://gist.github.com/1680738
+requireJavascript = function f(a,b){with(document)with(f[a]=f[a]||head.appendChild(createElement('script')))src=a,a=onload,id?b():onload=function(){b(id=1,a&&a());onload=a}};
 
 function requireAllJavascript(scripts, callback) {
   scripts = (scripts || []).slice(0);
