@@ -1,48 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="/stylesheets/application.css" />
-    <script src="/javascript/application.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://github.com/ded/reqwest/raw/master/reqwest.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://github.com/pvande/Milk/raw/master/dist/v1.2.0/milk.min.js" type="text/javascript" charset="utf-8"></script>
-  </head>
-  <body class="">
-    <div id='layout'></div>
+
+    <script src="/javascript/application.js" type="text/javascript" charset="utf-8"></script>
+
+    <link rel="stylesheet" href="/stylesheets/application.css" />
     <script type="text/javascript" charset="utf-8">
       window.params = <%= params_to_json %>;
-      document.body.onload = function() {
+
+      document.onreadystatechange = function() {
         if (params.skipLayout) return;
-        var timeout = 0;
 
-        (function(config) {
-          var func = arguments.callee;
-          if (func.lastConfig != JSON.stringify(config)) {
-            func.lastConfig = JSON.stringify(config);
-
-            (func.lastElements || []).forEach(function(element) {
-              if (element.update) {
-                clearInterval(element.update);
-                delete element.update;
-              }
-            });
-
-            (config.stylesheet || []).forEach(requireStylesheet);
-
-            requireAllJavascript(config.javascript, function() {
-              func.lastElements = buildLayout(config.layout);
-            });
-          }
-
-          setTimeout(function() {
-            timeout = 10000;
-            reqwest({
-              url: '/config?url=' + escape(params.config || '') + '&callback=?',
-              type: 'jsonp',
-              success: func
-            });
-          }, timeout);
-        })({});
+        requireJavascript('/javascript/grid.js', function() {
+          Tranquil['grid'].call(root, {
+            url: '/config?url=' + escape(params.config || ''),
+            interval: (parseInt(params.interval) || 30).seconds(),
+          });
+        });
       };
     </script>
+  </head>
+  <body>
+    <div id="root" class="cell grid"></div>
   </body>
 </html>

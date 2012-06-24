@@ -6,7 +6,7 @@ var Tranquil = {
       var div = this;
       obj.filter = eval('(' + (obj.filter || 'Object') + ')');
 
-      div.update = function() {
+      var update = function() {
         try {
           if (obj.url) reqwest({
             url: obj.url,
@@ -21,10 +21,11 @@ var Tranquil = {
         }
       };
 
-      div.update();
       if (obj.data) fn.call(div, obj, obj.filter(obj.data));
+      update();
 
-      setInterval(div.update, obj.interval || defaultInterval);
+      var id = setInterval(update, obj.interval || defaultInterval);
+      div.setAttribute('data-interval-id', id);
     };
 
     func.parameters = [
@@ -83,60 +84,65 @@ function requireStylesheet(style) {
   return false;
 }
 
-function buildLayout(layout) {
-  if (!layout) { return }
 function listify(x) {
   return x ? (x instanceof Array ? x : [x]) : [];
 }
 
-  var table = document.createElement('table');
-  table.id = 'layout';
+function diff(source, target) {
+  source = JSON.parse(JSON.stringify(source)).map(JSON.stringify);
+  target = JSON.parse(JSON.stringify(target)).map(JSON.stringify);
 
-  var elements = [];
-  layout.forEach(function(row, i) {
-    row = JSON.parse(JSON.stringify(row));
-    if (row.constructor != Array) { row = [row] }
+  var changes = [];
 
-    var tr = document.createElement('tr');
-    var td = document.createElement('td');
-    var divRow = document.createElement('div');
-    td.className = 'table';
-    divRow.className = 'row';
+  while (source.length && target.length) {
+    var oldVal = source.shift();
+    var newVal = target.shift();
 
-    tr.appendChild(td);
-    td.appendChild(divRow);
+    var added   = target.indexOf(oldVal);
+    var removed = source.indexOf(newVal);
 
-    row.forEach(function(cell, j) {
-      var div = document.createElement('div');
-      div.className = 'cell ' + cell.type;
-      div.id = 'cell-' + i + '-' + j;
+    if (JSON.stringify(oldVal) == JSON.stringify(newVal)) {
+      // If the values are the same, there was no change.
+      changes.push({ action: 'keep', value: JSON.parse(newVal) });
 
-      var fn = function() {
-        var type = Tranquil[cell.type];
-        if (!type)
-          return div.innerHTML = "Could not load type '" + cell.type + "'!";
+    } else if (~added || ~removed) {
+      // If the current value appears later in either array, we've something
+      // has been changed between here and there.
+      var inserting = ! ~removed || (~added && source.length < target.length);
 
-        requireAllJavascript(type.javascript, function() {
-          Tranquil[cell.type].call(div, cell);
-        }, cell.type);
-      };
+      var row    = inserting ? target : source;
+      var action = inserting ? 'insert' : 'delete';
+      var value  = inserting ? newVal : oldVal;
 
-      if (!(cell.type in Tranquil)) {
-        requireJavascript('/javascript/' + cell.type + '.js', fn);
-      } else {
-        fn();
+      row.unshift(value);
+      for (var i = 0; i <= (inserting ? added : removed); i++) {
+        changes.push({ action: action, value: JSON.parse(row.shift()) });
       }
+      changes.push({ action: 'keep', value: JSON.parse(row.shift()) });
+    } else {
+      // Otherwise, we should replace the old value with the new one.
+      changes.push({ action: 'change', value: JSON.parse(newVal), previous: JSON.parse(oldVal) });
+    }
+  }
 
-      if ('height' in cell) { tr.style.height = cell.height }
-      divRow.appendChild(div);
-      elements.push(div);
-    });
-
-    table.appendChild(tr);
+  // Add changes for anything remaining at the end of the list.
+  source.forEach(function(val) {
+    changes.push({ action: 'delete', value: JSON.parse(val) });
   });
 
-  document.body.replaceChild(table, document.getElementById('layout'));
-  return elements;
+  target.forEach(function(val) {
+    changes.push({ action: 'insert', value: JSON.parse(val) });
+  });
+
+  return changes;
+}
+
+function walkDiff(source, target, callbacks) {
+  diff(source, target).forEach(function(change) {
+    if (callbacks[change.action]) {
+      callbacks[change.action].call(callbacks, change.value, change.previous);
+    }
+  });
 }
 
 (function(Num) {
