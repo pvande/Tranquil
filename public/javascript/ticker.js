@@ -1,7 +1,7 @@
 Tranquil['ticker'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
   (obj.template = obj.template || {}).__proto__ = Tranquil['ticker'].template;
 
-  if (!this.childNodes.length) {
+  if (!this.children.length) {
     var newChild = document.createElement('div');
 
     if (typeof obj.speed != 'undefined') {
