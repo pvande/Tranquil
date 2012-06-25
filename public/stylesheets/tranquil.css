@@ -17,6 +17,10 @@ body {
   padding: 0.25em;
 }
 
+.cell.grid {
+  padding: 0;
+}
+
 .cell.calendar > div:first-child {
   padding: 0.2em 0.5em;
   background-color: #933;
