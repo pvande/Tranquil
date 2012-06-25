@@ -58,8 +58,10 @@ Tranquil['reservation'] = Tranquil.buildPanel((5).minute(), function(obj, data) 
     });
   }).bind(this);
 
+  // FIXME: This setInterval call never gets cleared!
   setInterval(adjustScroll, 10000);
-  adjustScroll();
+
+  setTimeout(adjustScroll, 400);
 });
 
 Tranquil['reservation'].filterGCal = function(data) {
