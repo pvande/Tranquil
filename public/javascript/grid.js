@@ -107,3 +107,5 @@ Tranquil['grid'] = Tranquil.buildPanel((60).seconds(), function(obj, data) {
     container.setAttribute('data-json', newLayoutJSON);
   });
 });
+
+Tranquil['grid'].stylesheet = '/stylesheets/layout/grid.css';

@@ -64,6 +64,8 @@ Tranquil['reservation'] = Tranquil.buildPanel((5).minute(), function(obj, data) 
   setTimeout(adjustScroll, 400);
 });
 
+Tranquil['reservation'].stylesheet = '/stylesheets/layout/reservation.css';
+
 Tranquil['reservation'].filterGCal = function(data) {
   var isToday = function(item) {
     if (item.status == "confirmed" && (item = item.when)) {

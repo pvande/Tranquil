@@ -12,6 +12,8 @@ Tranquil['table'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
   this.innerHTML = Milk.render("{{>_content}}", data, obj.template);
 });
 
+Tranquil['table'].stylesheet = '/stylesheets/layout/table.css';
+
 Tranquil['table'].parameters.push({
   name: 'keys',
   type: 'array',

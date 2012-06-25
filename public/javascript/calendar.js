@@ -6,6 +6,8 @@ Tranquil['calendar'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
   this.innerHTML = Milk.render(tmpl, data, obj.template);
 });
 
+Tranquil['calendar'].stylesheet = '/stylesheets/layout/calendar.css';
+
 Tranquil['calendar'].template = {
   title: '{{title}}',
   event: '{{.}}',

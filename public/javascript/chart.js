@@ -17,6 +17,8 @@ Tranquil['chart'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
   this.innerHTML = Milk.render(template, data, obj.template);
 });
 
+Tranquil['chart'].stylesheet = '/stylesheets/layout/chart.css';
+
 Tranquil['chart'].template = {
   title: '{{title}}',
   info: '{{info}}',

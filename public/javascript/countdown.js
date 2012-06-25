@@ -3,6 +3,8 @@ Tranquil['countdown'] = Tranquil.buildPanel((3).hour(), function(obj, data) {
   this.innerHTML = Milk.render("{{>content}}", data, obj.template);
 });
 
+Tranquil['countdown'].stylesheet = '/stylesheets/layout/countdown.css';
+
 Tranquil['countdown'].template = {
   event: '{{title}}',
   progressive: 'will happen in',

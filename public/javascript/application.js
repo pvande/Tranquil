@@ -95,7 +95,7 @@ function loadType(type, callback, error) {
   requireJavascript('/javascript/' + type + '.js', function() {
     if (!Tranquil[type]) { error && error() }
 
-    requireStylesheet('/stylesheets/layout/' + type + '.css')
+    listify(Tranquil[type].stylesheet).forEach(requireStylesheet);
     requireAllJavascript(Tranquil[type].javascript, callback);
   });
 }
