@@ -37,6 +37,7 @@ Tranquil['ticker'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
 });
 
 Tranquil['ticker'].stylesheet = '/stylesheets/layout/ticker.css';
+Tranquil['ticker'].javascript = '/javascript/vendor/milk.min.js';
 
 Tranquil['ticker'].parameters.push({
   name: 'speed',

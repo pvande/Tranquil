@@ -13,6 +13,7 @@ Tranquil['table'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
 });
 
 Tranquil['table'].stylesheet = '/stylesheets/layout/table.css';
+Tranquil['table'].javascript = '/javascript/vendor/milk.min.js';
 
 Tranquil['table'].parameters.push({
   name: 'keys',

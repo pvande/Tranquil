@@ -3,6 +3,8 @@ Tranquil['dynamic'] = Tranquil.buildPanel((1).minute(), function(obj, data) {
   this.innerHTML = Milk.render("{{>content}}", data, obj.template);
 });
 
+Tranquil['dynamic'].javascript = '/javascript/vendor/milk.min.js';
+
 Tranquil['dynamic'].template = {
   content: 'Override <tt>template.content</tt> to hide this message.',
 };

@@ -4,6 +4,7 @@ Tranquil['countdown'] = Tranquil.buildPanel((3).hour(), function(obj, data) {
 });
 
 Tranquil['countdown'].stylesheet = '/stylesheets/layout/countdown.css';
+Tranquil['countdown'].javascript = '/javascript/vendor/milk.min.js';
 
 Tranquil['countdown'].template = {
   event: '{{title}}',

@@ -65,6 +65,7 @@ Tranquil['reservation'] = Tranquil.buildPanel((5).minute(), function(obj, data) 
 });
 
 Tranquil['reservation'].stylesheet = '/stylesheets/layout/reservation.css';
+Tranquil['reservation'].javascript = '/javascript/vendor/milk.min.js';
 
 Tranquil['reservation'].filterGCal = function(data) {
   var isToday = function(item) {
