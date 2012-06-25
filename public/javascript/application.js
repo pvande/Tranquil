@@ -4,7 +4,8 @@ var Tranquil = {
 
     var func = function(obj) {
       var div = this;
-      obj.filter = eval('(' + (obj.filter || 'Object') + ')');
+
+      obj.filter = eval('(' + (obj.filter || function(x) { return x }) + ')');
 
       var update = function() {
         try {
@@ -56,11 +57,15 @@ var Tranquil = {
   },
 };
 
+function listify(x) {
+  return x ? (x instanceof Array ? x : [x]) : [];
+}
+
 // Modified From: https://gist.github.com/1680738
 requireJavascript = function f(a,b){with(document)with(f[a]=f[a]||head.appendChild(createElement('script')))src=a,a=onload,id?b():onload=function(){b(id=1,a&&a());onload=a}};
 
 function requireAllJavascript(scripts, callback) {
-  scripts = (scripts || []).slice(0);
+  scripts = listify(scripts).slice(0);
   if (!scripts.length) return callback();
 
   scripts.forEach(function(script) {
@@ -78,14 +83,21 @@ function requireStylesheet(style) {
     var tag = document.createElement('link');
     tag.href = style;
     tag.rel = 'stylesheet';
-    document.head.appendChild(tag);
+    document.head.insertBefore(tag, document.head.firstChild);
     return true;
   }
   return false;
 }
 
-function listify(x) {
-  return x ? (x instanceof Array ? x : [x]) : [];
+function loadType(type, callback, error) {
+  if (Tranquil[type]) { callback() }
+
+  requireJavascript('/javascript/' + type + '.js', function() {
+    if (!Tranquil[type]) { error && error() }
+
+    requireStylesheet('/stylesheets/layout/' + type + '.css')
+    requireAllJavascript(Tranquil[type].javascript, callback);
+  });
 }
 
 function diff(source, target) {

@@ -6,7 +6,29 @@
 
     <script src="/javascript/application.js" type="text/javascript" charset="utf-8"></script>
 
-    <link rel="stylesheet" href="/stylesheets/application.css" />
+    <style>
+      html, body, .cell {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        margin: 0;
+      }
+
+      body {
+        display: table;
+      }
+
+      .cell {
+        display: table-cell;
+        position: relative;
+        text-align: center;
+        vertical-align: middle;
+      }
+    </style>
+
     <script type="text/javascript" charset="utf-8">
       // Currently supported query string parameters:
       // * config     -- The URL to load for the layout description.
@@ -18,17 +40,17 @@
       //                 Defaults to 'tranquil'.  Supports multiple.
       window.params = <%= params_to_json %>;
 
+      // Load the visual style for the status board.
+      listify(params.style || 'tranquil').forEach(function(style) {
+        style = style.replace(/^((?!https?.*$).*)/, function(s) {
+          return '/stylesheets/' + style + '.css';
+        });
+        requireStylesheet(style, true);
+      });
+
       document.onreadystatechange = function() {
         // Wait to act until the document is actually ready.
         if (document.readyState != 'complete') { return }
-
-        // Load the visual style for the status board.
-        listify(params.style || 'tranquil').forEach(function(style) {
-          style = style.replace(/^((?!https?.*$).*)/, function(s) {
-            return '/stylesheets/' + style + '.css';
-          });
-          requireStylesheet(style);
-        });
 
         // If we've been asked to bypass the actual layout process, stop here.
         // The primary reason for using this option would be to leverage other
@@ -37,7 +59,7 @@
 
         // To build the layout, we need to instantiate a Grid widget inside the
         // `root` element, based on the named config file.
-        requireJavascript('/javascript/grid.js', function() {
+        loadType('grid', function() {
           Tranquil['grid'].call(root, {
             url: '/config?url=' + escape(params.config || ''),
             interval: (parseInt(params.interval) || 30).seconds(),

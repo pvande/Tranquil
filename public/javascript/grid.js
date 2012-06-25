@@ -90,14 +90,11 @@ Tranquil['grid'] = Tranquil.buildPanel((60).seconds(), function(obj, data) {
         cell.classList.add(obj.type);
         this.container.insertBefore(cell, this.cells[0]);
 
-        requireJavascript('/javascript/' + obj.type + '.js', function() {
-          var type = Tranquil[obj.type];
-          if (!type) node.innerHTML = "Could not load type '" + obj.type + "'!";
-
-          requireAllJavascript(type.javascript, function() {
-            Tranquil[obj.type].call(cell, obj);
-          });
-        });
+        loadType(
+          obj.type,
+          function() { Tranquil[obj.type].call(cell, obj) },
+          function() { node.innerHTML = "No such type -- '" + obj.type + "'!" }
+        )
       },
       
       '_teardownCell': function(cell) {

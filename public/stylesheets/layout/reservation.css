@@ -1,0 +1,49 @@
+.cell.reservation {
+  min-height: 60px;
+}
+
+.cell.reservation > div:last-child {
+  border: solid 1px black;
+  position: relative;
+  height: 80%;
+}
+
+.cell.reservation > div:last-child > div:first-child {
+  border-bottom: solid 1px red;
+  position: absolute;
+  top: 25%;
+  left: 40px;
+  right: 0;
+  z-index: 1;
+}
+
+.cell.reservation > div:last-child > div:last-child {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  overflow: -webkit-marquee;
+  white-space: nowrap;
+  -webkit-marquee-direction: up;
+  -webkit-marquee-increment: 1px;
+  -webkit-marquee-speed: 60s;
+}
+
+.cell.reservation > div:last-child > div:last-child > div:last-child {
+  background-repeat: repeat-y !important;
+  height: 4320px;
+  width: 100%;
+}
+
+.cell.reservation div.res {
+  position: absolute;
+  left: 50px;
+  right: 10px;
+  min-height: 15px;
+  font-size: 15px;
+  border: solid 1px black;
+}
+
+.cell.reservation div.res div {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
