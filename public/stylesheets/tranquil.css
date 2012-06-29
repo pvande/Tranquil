@@ -21,22 +21,12 @@ body {
   padding: 0;
 }
 
-.cell.calendar > div:first-child {
-  padding: 0.2em 0.5em;
-  background-color: #933;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
 .cell.calendar > div:last-child {
   padding: 4px 0;
   text-align: left;
   background-color: #433;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-radius: 10px;
+  height: 100%;
 }
 
 .cell.calendar > div:last-child > div {
@@ -44,6 +34,19 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.cell.calendar > div:last-child > div:first-child {
+  margin: 0px;
+  margin-top: -4px;
+  padding: 0.2em 0.5em;
+  background-color: #933;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .cell.chart > table table {
