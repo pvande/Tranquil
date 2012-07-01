@@ -90,6 +90,12 @@ Tranquil['grid'] = Tranquil.buildPanel((60).seconds(), function(obj, data) {
         cell.classList.add(obj.type);
         this.container.insertBefore(cell, this.cells[0]);
 
+        for (var key in (obj.style || {})) {
+          if (obj.style.hasOwnProperty(key)) {
+            cell.style[key] = obj.style[key]
+          }
+        }
+
         loadType(
           obj.type,
           function() { Tranquil[obj.type].call(cell, obj) },
