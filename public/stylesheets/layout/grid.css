@@ -10,13 +10,12 @@
 }
 
 .cell.grid > table > tr > td {
-  width: 100%;
-  height: 100%;
-  display: table;
-  table-layout: fixed;
   padding: 0;
 }
 
 .cell.grid > table > tr > td > div {
-  display: table-row;
+  width: 100%;
+  height: 100%;
+  display: table;
+  table-layout: fixed;
 }
