@@ -90,13 +90,16 @@ function requireStylesheet(style) {
 }
 
 function loadType(type, callback, error) {
-  if (Tranquil[type]) { callback() }
+  function loadAndCallback() {
+    listify(Tranquil[type].stylesheet).forEach(requireStylesheet);
+    requireAllJavascript(Tranquil[type].javascript, callback);
+  }
+
+  if (Tranquil[type]) { return loadAndCallback() }
 
   requireJavascript('/javascript/' + type + '.js', function() {
     if (!Tranquil[type]) { error && error() }
-
-    listify(Tranquil[type].stylesheet).forEach(requireStylesheet);
-    requireAllJavascript(Tranquil[type].javascript, callback);
+    loadAndCallback();
   });
 }
 
