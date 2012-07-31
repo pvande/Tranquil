@@ -7,26 +7,17 @@ Tranquil['reservation'] = Tranquil.buildPanel((5).minute(), function(obj, data) 
     _reservations: '{{#reservations}}<div class="res" style="{{>style}}"><div style="position: relative;">{{>reservation}}</div></div>{{/reservations}}',
   };
 
-  data.dID = this.id + '-container';
-  data.cID = this.id + '-canvas';
-
   if (obj.template) {
     if (obj.template.title)       { parts.title = obj.template.title }
     if (obj.template.reservation) { parts.reservation = obj.template.reservation }
     if (obj.template.color)       { parts.color = obj.template.color }
   }
 
-  if (!this.innerHTML) {
-    // Render template
-    var tmpl = '<div class="title">{{>title}}</div>';
-    tmpl += '<div><div></div><div>';
-    tmpl += '<div id="{{dID}}" style="background: -webkit-canvas({{cID}})">';
-    tmpl += '{{>_reservations}}';
-    tmpl += '</div></div></div>';
-    this.innerHTML = Milk.render(tmpl, data, parts);
-
+  if (!Tranquil['reservation'].canvas) {
     // Draw background
-    var canvas = document.getCSSCanvasContext("2d", data.cID, 40, 24 * 60);
+    var canvas = Tranquil['reservation'].canvas = document.getCSSCanvasContext(
+      '2d', 'reservation-background', 40, 24 * 60
+    );
     canvas.fillStyle = '#BBB';
     canvas.font = "10px monospace";
     canvas.textBaseline = 'middle';
@@ -38,8 +29,19 @@ Tranquil['reservation'] = Tranquil.buildPanel((5).minute(), function(obj, data) 
       canvas.fillRect(0, off + 30, 8, 1);
       canvas.fillRect(0, off + 45, 4, 1);
     }
+  }
+
+  if (!this.innerHTML) {
+    // Render template
+    var tmpl = '<div class="title">{{>title}}</div>';
+    tmpl += '<div><div></div><div>';
+    tmpl += '<div style="background: -webkit-canvas(reservation-background)">';
+    tmpl += '{{>_reservations}}';
+    tmpl += '</div></div></div>';
+    this.innerHTML = Milk.render(tmpl, data, parts);
   } else {
-    document.getElementById(data.dID).innerHTML = Milk.render(parts._reservations, data, parts);
+    var rendered = Milk.render(parts._reservations, data, parts);
+    this.lastChild.lastChild.firstChild.innerHTML = rendered;
   }
 
   var adjustScroll = (function() {
@@ -58,14 +60,18 @@ Tranquil['reservation'] = Tranquil.buildPanel((5).minute(), function(obj, data) 
     });
   }).bind(this);
 
-  // FIXME: This setInterval call never gets cleared!
-  setInterval(adjustScroll, 10000);
+  var scrollerID = setInterval(adjustScroll, 1000);
+  this.setAttribute('data-scroller-id', scrollerID);
 
   setTimeout(adjustScroll, 400);
 });
 
 Tranquil['reservation'].stylesheet = '/stylesheets/layout/reservation.css';
 Tranquil['reservation'].javascript = '/javascript/vendor/milk.min.js';
+
+Tranquil['reservation'].teardown = function(cell) {
+  clearInterval(cell.getAttribute('data-scroller-id'));
+};
 
 Tranquil['reservation'].filterGCal = function(data) {
   var isToday = function(item) {

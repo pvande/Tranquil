@@ -96,6 +96,8 @@ Tranquil['grid'] = Tranquil.buildPanel((60).seconds(), function(obj, data) {
           }
         }
 
+        cell.setAttribute('data-type', obj.type);
+
         loadType(
           obj.type,
           function() { Tranquil[obj.type].call(cell, obj) },
@@ -106,6 +108,9 @@ Tranquil['grid'] = Tranquil.buildPanel((60).seconds(), function(obj, data) {
       '_teardownCell': function(cell) {
         var intervalID = cell.getAttribute('data-interval-id');
         if (intervalID) clearInterval(intervalID);
+
+        var type = Tranquil[cell.getAttribute('data-type')];
+        if (type && type.teardown) type.teardown(cell);
       },
     });
 
