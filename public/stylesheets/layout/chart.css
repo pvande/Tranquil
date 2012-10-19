@@ -5,10 +5,22 @@
   height: 100%;
   margin: auto;
   table-layout: fixed;
+  min-height: 50px;
+}
+
+.cell.chart > table * {
+  line-height: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .cell.chart > table > tfoot {
   height: 1px;
+}
+
+.cell.chart > table > tfoot td {
+  line-height: 1em;
 }
 
 .cell.chart > table table {
@@ -29,6 +41,7 @@
 
 .cell.chart .bar {
   height: 100%;
+  padding: 0;
   background: #000;
 }
 

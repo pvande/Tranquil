@@ -9,6 +9,10 @@
   height: 100%;
 }
 
+.cell.grid > table > tr {
+  height: 1px;
+}
+
 .cell.grid > table > tr > td {
   padding: 0;
 }

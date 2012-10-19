@@ -108,6 +108,10 @@ body {
   font-weight: bold;
 }
 
+.cell.embed iframe {
+  border: solid 2px black;
+}
+
 .cell.ticker > div {
   display: inline-block;
   width: 100%;
